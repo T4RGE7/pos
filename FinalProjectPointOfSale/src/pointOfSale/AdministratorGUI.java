@@ -17,6 +17,10 @@ public class AdministratorGUI extends JPanel
 		setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, DARK_GREEN));
 		
 		add(new ReceiptPanel());
-		Tools.addBlankSpace(this,3);
+		JPanel quarterPanel = new JPanel(new GridLayout(2,1));
+		quarterPanel.add(new ReceiptLoader());
+		Tools.addBlankSpace(quarterPanel,1);
+		add(quarterPanel);
+		Tools.addBlankSpace(this,2);
 	}
 }
