@@ -1,13 +1,19 @@
 package pointOfSale;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class LogInGUI extends JPanel implements ActionListener
 {
@@ -21,7 +27,7 @@ public class LogInGUI extends JPanel implements ActionListener
 	private JPanel exitPanel = new JPanel(new GridLayout(4,2));
 	private KeyPad numberPad = new KeyPad();
 	private MenuButton exitButton = new MenuButton("Exit","Exit");
-	private JPanel tempPanel = new JPanel(new GridLayout(3,3));
+	private JPanel tempPanel = new JPanel(new GridLayout(1,1));
 	
 	LogInGUI()
 	{	
@@ -43,11 +49,23 @@ public class LogInGUI extends JPanel implements ActionListener
 		halfPanel.add(quarterPanel);
 		halfPanel.setBackground(DARK_CHAMPAGNE);
 		
+		File imageFile = new File("Logo.jpg");
+		Image loadImage = null;
+		try
+		{
+			loadImage = ImageIO.read(imageFile);
+		}
+		catch(IOException e)
+		{
+			
+		}
+		Image resizedImage = loadImage.getScaledInstance(tempPanel.getWidth(),
+				tempPanel.getHeight(), UNDEFINED_CONDITION);
+		JLabel logoLabel = new JLabel(new ImageIcon(resizedImage));
+		
 		tempPanel.setBackground(PALE_GOLDENROD);
 		tempPanel.setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
-		Tools.addBlankSpace(tempPanel,4);
-		tempPanel.add(new JLabel("Logo Here"));
-		Tools.addBlankSpace(tempPanel, 4);
+		
 		
 		add(tempPanel);
 		add(halfPanel);
