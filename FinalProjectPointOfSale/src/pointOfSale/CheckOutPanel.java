@@ -85,5 +85,7 @@ public class CheckOutPanel extends JPanel implements ActionListener
 			ReceiptPanel.deleteItem(deleteField.getText().trim(), deleteField);
 		else if(event.getActionCommand().equals("Checkout"))
 			ReceiptPanel.saveReceipt();
+		else if(event.getActionCommand().equals("System"))
+			SystemInit.setAdminScreen();
 	}
 }

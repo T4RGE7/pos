@@ -17,7 +17,7 @@ public class SystemInit extends JFrame
 	
 	SystemInit()
 	{
-		setUndecorated(true);
+		setUndecorated(false);
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridLayout(1,1));
@@ -44,6 +44,12 @@ public class SystemInit extends JFrame
 	{
 		contentPane.removeAll();
 		contentPane.add(new TransactionGUI(accessLevel));
+		Tools.update(contentPane);
+	}
+	public static void setAdminScreen()
+	{
+		contentPane.removeAll();
+		contentPane.add(new AdministratorGUI());
 		Tools.update(contentPane);
 	}
 }

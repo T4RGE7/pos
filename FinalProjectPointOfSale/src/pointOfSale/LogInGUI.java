@@ -21,7 +21,6 @@ public class LogInGUI extends JPanel implements ActionListener
 	private JPanel exitPanel = new JPanel(new GridLayout(4,2));
 	private KeyPad numberPad = new KeyPad();
 	private MenuButton exitButton = new MenuButton("Exit","Exit");
-	
 	private JPanel tempPanel = new JPanel(new GridLayout(3,3));
 	
 	LogInGUI()
