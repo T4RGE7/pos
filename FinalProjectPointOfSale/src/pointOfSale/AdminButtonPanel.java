@@ -11,7 +11,7 @@ public class AdminButtonPanel extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
-	private MenuButton exitButton = new MenuButton("Exit","Exit");
+	private MenuButton exitButton = new MenuButton("Back","Back");
 	
 	AdminButtonPanel()
 	{

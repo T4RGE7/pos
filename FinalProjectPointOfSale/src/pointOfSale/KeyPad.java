@@ -16,7 +16,8 @@ public class KeyPad extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
-	private final String SECURITY_FILE = "Files/System/SecurityCodes";
+	private static final String SECURITY_FILE = "Files/System/SecurityCodes";
+	
 	private JTextField numberField = new JTextField("",10);
 	private String numberCode = "";
 	private JLabel errorLabel = new JLabel("Invalid Code");
@@ -27,6 +28,7 @@ public class KeyPad extends JPanel implements ActionListener
 		setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
 		setLayout(new GridLayout(5,1));
 		setBackground(DARK_CHAMPAGNE);
+		
 		numberField.setEditable(false);
 		numberField.setBackground(Color.WHITE);
 		numberField.setFont(new Font(Font.SERIF,Font.PLAIN,18));
@@ -113,8 +115,8 @@ public class KeyPad extends JPanel implements ActionListener
 					;
 				else
 				{
-					String accessLevel = line.substring(0,1);
-					String code = line.substring(2,8);
+					String code = line.substring(0,6);
+					String accessLevel = line.substring(7,8);
 					if(numberCode.equals(code))
 						SystemInit.setTransactionScreen(accessLevel.equals("A"));
 					else
