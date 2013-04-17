@@ -27,6 +27,8 @@ public class TransactionGUI extends JPanel
 		setBackground(DARK_CHAMPAGNE);
 		setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, DARK_GREEN));
 		
+		ReceiptPanel.clearReceipt();
+		
 		initializeCategories();
 		restaurantMenu = new ItemPanel(itemCategory, menuItem);
 		

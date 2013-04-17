@@ -108,29 +108,34 @@ public class ReceiptPanel extends JPanel
 	}
 	public static void saveReceipt()
 	{
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
-		Date date = new Date();
-		String receiptContentFile = dateFormat.format(date);
-		
-		PrintWriter listWriter = null;
-		PrintWriter contentWriter = null;
-		
-		try
+		if(receiptItems.equals(""))
+			;
+		else
 		{
-			listWriter = new PrintWriter(new FileOutputStream(RECEIPT_LIST_FILE, true));
-			contentWriter = new PrintWriter(RECEIPT_PATH + receiptContentFile);
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+			Date date = new Date();
+			String receiptContentFile = dateFormat.format(date);
+		
+			PrintWriter listWriter = null;
+			PrintWriter contentWriter = null;
+		
+			try
+			{
+				listWriter = new PrintWriter(new FileOutputStream(RECEIPT_LIST_FILE, true));
+				contentWriter = new PrintWriter(RECEIPT_PATH + receiptContentFile);
+			}
+			catch(FileNotFoundException e)
+			{
+				System.out.println("File not found");
+			}
+			listWriter.println(receiptContentFile);
+			contentWriter.println(receiptItems
+								+ "\n"
+								+ receiptTotal + "\tTotal");
+			listWriter.close();
+			contentWriter.close();
+			clearReceipt();
 		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("File not found");
-		}
-		listWriter.println(receiptContentFile);
-		contentWriter.println(receiptItems
-							+ "\n"
-							+ receiptTotal + "\tTotal");
-		listWriter.close();
-		contentWriter.close();
-		clearReceipt();
 	}
 	public static void loadReceipt(String receiptFile)
 	{
