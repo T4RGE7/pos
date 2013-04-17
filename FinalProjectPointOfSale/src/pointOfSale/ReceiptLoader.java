@@ -1,14 +1,6 @@
 package pointOfSale;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.GridLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -21,13 +13,12 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final String RECEIPT_LIST = "Files/Receipts/ReceiptList";
 	
-	private JPanel upperPanel = new JPanel(new GridLayout(6,1));
-	private JPanel headerPanel = new JPanel(new GridLayout(1,2));
-	private JTextField entryField = new JTextField(11);
-	private JTextArea receiptArea = new JTextArea(20,41);
-	private MenuButton loadButton = new MenuButton("Load","Load");
-	private String receiptText = "";
-	private int receipts = 1;
+	private JPanel upperPanel = new JPanel(new GridLayout(3,1));
+	private JPanel buttonPanel = new JPanel(new GridLayout(2,2));
+	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private JList<String> receiptList = null;
+	private JLabel titleLabel = new JLabel("Load Saved Receipts", SwingConstants.CENTER);
+	private JLabel listLabel = new JLabel("Select Receipt from list below", SwingConstants.LEFT);
 	
 	ReceiptLoader()
 	{
@@ -35,46 +26,36 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		
 		readReceipts();
+		receiptList = new JList<String>(listModel);
+		receiptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		if(receipts > receiptArea.getRows())
-			receiptArea.setRows(receipts);
-		receiptArea.setText(receiptText);
-		receiptArea.setEditable(false);
+		titleLabel.setVerticalAlignment(SwingConstants.TOP);
+		titleLabel.setFont(new Font(Font.SERIF, Font.BOLD, 27));
+		listLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		listLabel.setFont(new Font(Font.SERIF, Font.ITALIC, 18));
 		
-		headerPanel.setBackground(DARK_CHAMPAGNE);
-		headerPanel.add(new JLabel("Enter Receipt to Load:",SwingConstants.LEFT));
-		headerPanel.add(loadButton);
-		loadButton.addActionListener(this);
+		buttonPanel.setBackground(DARK_CHAMPAGNE);
+		buttonPanel.add(new MenuButton("Load","Load",this));
+		buttonPanel.add(new MenuButton("Delete","Delete",this));
+		Tools.addBlankSpace(buttonPanel, 1);
+		buttonPanel.add(new MenuButton("Delete All","Delete All",this));
 		
 		upperPanel.setBackground(DARK_CHAMPAGNE);
-		Tools.addBlankSpace(upperPanel,2);
-		upperPanel.add(headerPanel);
-		upperPanel.add(entryField);
-		Tools.addBlankSpace(upperPanel,2);
+		upperPanel.add(titleLabel);
+		upperPanel.add(buttonPanel);
+		upperPanel.add(listLabel);
 		
 		add(upperPanel);
-		add(new JScrollPane(receiptArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
+		add(new JScrollPane(receiptList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 	}
 	
 	public void actionPerformed(ActionEvent event)
 	{
-		if(event.getActionCommand().equals("Load"))
-		{
-			int entryIndex = receiptText.indexOf("[" + entryField.getText().trim() + "]");
-					
-			if(entryIndex > -1)
-			{
-				String receiptSection = receiptText.substring(entryIndex);
-				int tab = receiptSection.indexOf("\t");
-				int newLine = receiptSection.indexOf("\n");
-				
-				ReceiptPanel.loadReceipt(receiptSection.substring(tab+1,newLine));
-				entryField.setText("");
-			}
-			else
-				entryField.setText("NOT FOUND");
-		}
+		if(event.getActionCommand().equals("Load") && receiptList.getSelectedIndex() > -1)
+			ReceiptPanel.loadReceipt(receiptList.getSelectedValue());
+		if(event.getActionCommand().equals("Delete") && receiptList.getSelectedIndex() > -1)
+			listModel.removeElementAt(receiptList.getSelectedIndex());
 	}
 	
 	private void readReceipts()
@@ -90,15 +71,12 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		}
 		while(inputStream.hasNextLine())
 		{
-			String line = inputStream.nextLine();
+			String line = inputStream.nextLine().trim();
 			
 			if(line.equals(""))
 				;
 			else
-			{
-				receiptText = receiptText + "[" + receipts + "]\t" + line + "\n";
-				receipts++;
-			}
+				listModel.addElement(line);
 		}
 	}
 }

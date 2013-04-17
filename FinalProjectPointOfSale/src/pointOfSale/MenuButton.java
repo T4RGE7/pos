@@ -2,6 +2,7 @@ package pointOfSale;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import java.awt.Color;
+import java.awt.event.ActionListener;
 
 public class MenuButton extends JButton
 {
@@ -14,5 +15,13 @@ public class MenuButton extends JButton
 		setActionCommand(command);
 		setBackground(PALE_GOLDENROD);
 		setBorder(BorderFactory.createRaisedBevelBorder());
+	}
+	MenuButton(String label, String command, ActionListener listener)
+	{
+		setText(label);
+		setActionCommand(command);
+		setBackground(PALE_GOLDENROD);
+		setBorder(BorderFactory.createRaisedBevelBorder());
+		addActionListener(listener);
 	}
 }
