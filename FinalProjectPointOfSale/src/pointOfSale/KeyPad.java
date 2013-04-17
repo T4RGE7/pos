@@ -114,7 +114,7 @@ public class KeyPad extends JPanel implements ActionListener
 				else
 				{
 					String accessLevel = line.substring(0,1);
-					String code = line.substring(2);
+					String code = line.substring(2,8);
 					if(numberCode.equals(code))
 						SystemInit.setTransactionScreen(accessLevel.equals("A"));
 					else

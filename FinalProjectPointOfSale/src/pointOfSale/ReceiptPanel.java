@@ -108,7 +108,7 @@ public class ReceiptPanel extends JPanel
 	}
 	public static void saveReceipt()
 	{
-		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.a.HH.mm.ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 		Date date = new Date();
 		String receiptContentFile = dateFormat.format(date);
 		
@@ -134,6 +134,8 @@ public class ReceiptPanel extends JPanel
 	}
 	public static void loadReceipt(String receiptFile)
 	{
+		clearReceipt();
+		
 		receiptFile = RECEIPT_PATH + receiptFile;
 		
 		Scanner inputStream = null;
@@ -142,7 +144,7 @@ public class ReceiptPanel extends JPanel
 			inputStream = new Scanner(new File(receiptFile));
 			receiptArea.setText("");
 			while(inputStream.hasNextLine())
-				receiptArea.setText(receiptArea.getText() + inputStream.nextLine());
+				receiptArea.setText(receiptArea.getText() + inputStream.nextLine() + "\n");
 		}
 		catch(FileNotFoundException e)
 		{

@@ -9,11 +9,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ReceiptLoader extends JPanel
+public class ReceiptLoader extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy the compiler
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
@@ -34,7 +36,7 @@ public class ReceiptLoader extends JPanel
 		
 		readReceipts();
 		
-		if(receipts > 20)
+		if(receipts > receiptArea.getRows())
 			receiptArea.setRows(receipts);
 		receiptArea.setText(receiptText);
 		receiptArea.setEditable(false);
@@ -42,6 +44,7 @@ public class ReceiptLoader extends JPanel
 		headerPanel.setBackground(DARK_CHAMPAGNE);
 		headerPanel.add(new JLabel("Enter Receipt to Load:",SwingConstants.LEFT));
 		headerPanel.add(loadButton);
+		loadButton.addActionListener(this);
 		
 		upperPanel.setBackground(DARK_CHAMPAGNE);
 		Tools.addBlankSpace(upperPanel,2);
@@ -53,6 +56,27 @@ public class ReceiptLoader extends JPanel
 		add(new JScrollPane(receiptArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 	}
+	
+	public void actionPerformed(ActionEvent event)
+	{
+		if(event.getActionCommand().equals("Load"))
+		{
+			int entryIndex = receiptText.indexOf("[" + entryField.getText().trim() + "]");
+					
+			if(entryIndex > -1)
+			{
+				String receiptSection = receiptText.substring(entryIndex);
+				int tab = receiptSection.indexOf("\t");
+				int newLine = receiptSection.indexOf("\n");
+				
+				ReceiptPanel.loadReceipt(receiptSection.substring(tab+1,newLine));
+				entryField.setText("");
+			}
+			else
+				entryField.setText("NOT FOUND");
+		}
+	}
+	
 	private void readReceipts()
 	{
 		Scanner inputStream = null;
