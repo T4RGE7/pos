@@ -26,7 +26,7 @@ public class AdministratorGUI extends JPanel
 		quarterPanel1.add(new ReceiptLoader());
 		Tools.addBlankSpace(quarterPanel1, 1);
 		
-		Tools.addBlankSpace(quarterPanel2, 1);
+		quarterPanel2.add(new PinEditor());
 		quarterPanel2.add(new AdminButtonPanel());
 		
 		add(new ReceiptPanel());

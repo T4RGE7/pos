@@ -36,7 +36,9 @@ public class PinEditor extends JPanel
 		
 		userArea.setRows(users);
 		userArea.setText(pinText);
+		userArea.setEditable(false);
 		
+		optionPanel.setBackground(DARK_CHAMPAGNE);
 		optionPanel.add(accessBox);
 		optionPanel.add(userField);
 		optionPanel.add(addButton);

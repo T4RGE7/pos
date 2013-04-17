@@ -27,7 +27,7 @@ public class AdminButtonPanel extends JPanel implements ActionListener
 	
 	public void actionPerformed(ActionEvent event)
 	{
-		if(event.getActionCommand().equals("Exit"))
+		if(event.getActionCommand().equals("Back"))
 			SystemInit.setTransactionScreen();
 	}
 }
