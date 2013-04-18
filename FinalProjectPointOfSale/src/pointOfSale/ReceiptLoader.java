@@ -5,13 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ReceiptLoader extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy the compiler
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
-	private static final String RECEIPT_LIST = "Files/Receipts/ReceiptList";
+	private static final String RECEIPT_PATH = "Files/Receipts/";
+	private static final String RECEIPT_LIST = RECEIPT_PATH + "ReceiptList";
 	
 	private JPanel upperPanel = new JPanel(new GridLayout(3,1));
 	private JPanel buttonPanel = new JPanel(new GridLayout(2,2));
@@ -19,6 +21,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	private JList<String> receiptList = null;
 	private JLabel titleLabel = new JLabel("Load Saved Receipts", SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below", SwingConstants.LEFT);
+	private int elements=0;
 	
 	ReceiptLoader()
 	{
@@ -55,7 +58,9 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		if(event.getActionCommand().equals("Load") && receiptList.getSelectedIndex() > -1)
 			ReceiptPanel.loadReceipt(receiptList.getSelectedValue());
 		if(event.getActionCommand().equals("Delete") && receiptList.getSelectedIndex() > -1)
-			listModel.removeElementAt(receiptList.getSelectedIndex());
+			deleteReceipt();
+		if(event.getActionCommand().equals("Delete All"))
+			deleteAll();
 	}
 	
 	private void readReceipts()
@@ -76,7 +81,52 @@ public class ReceiptLoader extends JPanel implements ActionListener
 			if(line.equals(""))
 				;
 			else
+			{
 				listModel.addElement(line);
+				elements++;
+			}
 		}
+	}
+	private void deleteReceipt()
+	{
+		File file = new File(RECEIPT_PATH + receiptList.getSelectedValue());
+		file.delete();
+		
+		listModel.removeElementAt(receiptList.getSelectedIndex());
+		elements--;
+		
+		String receiptContent = "";
+		for(int count=0; count < elements; count++)
+			receiptContent += listModel.getElementAt(count) + "\n";
+		
+		editReceiptList(receiptContent);
+	}
+	private void deleteAll()
+	{
+		File receiptDirectory = new File("Files/Receipts");
+		File[] file = receiptDirectory.listFiles();
+		
+		for(int count=0; count < file.length; count++)
+			file[count].delete();
+		for(int count=0; count < elements;)
+		{
+			listModel.removeElementAt(count);
+			elements--;
+		}
+		editReceiptList("");
+	}
+	private void editReceiptList(String newList)
+	{
+		PrintWriter listWriter = null;
+		try
+		{
+			listWriter = new PrintWriter(RECEIPT_LIST);
+		}
+		catch(FileNotFoundException e)
+		{
+			System.out.println("File not found");
+		}
+		listWriter.println(newList);
+		listWriter.close();
 	}
 }

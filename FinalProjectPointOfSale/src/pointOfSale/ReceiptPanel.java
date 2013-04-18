@@ -155,7 +155,5 @@ public class ReceiptPanel extends JPanel
 		{
 			System.out.println("File not found");
 		}
-		
-		
 	}
 }
