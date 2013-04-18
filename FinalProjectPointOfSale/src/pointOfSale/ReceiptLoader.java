@@ -12,8 +12,8 @@ public class ReceiptLoader extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy the compiler
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
-	private static final String RECEIPT_PATH = "Files/Receipts/";
-	private static final String RECEIPT_LIST = RECEIPT_PATH + "ReceiptList";
+	private static final String RECEIPT_PATH = "Files/Receipts";
+	private static final String RECEIPT_LIST = RECEIPT_PATH + "/ReceiptList";
 	
 	private JPanel upperPanel = new JPanel(new GridLayout(3,1));
 	private JPanel buttonPanel = new JPanel(new GridLayout(2,2));
@@ -103,7 +103,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	}
 	private void deleteAll()
 	{
-		File receiptDirectory = new File("Files/Receipts");
+		File receiptDirectory = new File(RECEIPT_PATH);
 		File[] file = receiptDirectory.listFiles();
 		
 		for(int count=0; count < file.length; count++)
