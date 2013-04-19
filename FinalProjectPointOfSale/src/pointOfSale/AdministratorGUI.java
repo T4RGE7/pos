@@ -12,7 +12,6 @@ public class AdministratorGUI extends JPanel
 	
 	private JPanel quarterPanel1 = new JPanel(new GridLayout(2,1));
 	private JPanel quarterPanel2 = new JPanel(new GridLayout(2,1));
-	private JPanel quarterPanel3 = new JPanel(new GridLayout(2,1));
 	
 	AdministratorGUI()
 	{
@@ -22,11 +21,11 @@ public class AdministratorGUI extends JPanel
 		
 		ReceiptPanel.clearReceipt();
 		
-		quarterPanel1.setBackground(DARK_CHAMPAGNE);
 		quarterPanel1.add(new ReceiptLoader());
-		Tools.addBlankSpace(quarterPanel1, 1);
+		quarterPanel1.add(new PinEditor());
 		
-		quarterPanel2.add(new PinEditor());
+		quarterPanel2.setBackground(DARK_CHAMPAGNE);
+		Tools.addBlankSpace(quarterPanel2,1);
 		quarterPanel2.add(new AdminButtonPanel());
 		
 		add(new ReceiptPanel());

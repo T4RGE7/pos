@@ -33,7 +33,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		receiptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		titleLabel.setVerticalAlignment(SwingConstants.TOP);
-		titleLabel.setFont(new Font(Font.SERIF, Font.BOLD, 27));
+		titleLabel.setFont(new Font(Font.SERIF, Font.BOLD, 24));
 		listLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		listLabel.setFont(new Font(Font.SERIF, Font.ITALIC, 18));
 		
