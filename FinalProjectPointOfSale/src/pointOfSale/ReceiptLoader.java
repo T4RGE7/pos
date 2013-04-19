@@ -21,7 +21,6 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	private JList<String> receiptList = null;
 	private JLabel titleLabel = new JLabel("Load Saved Receipts", SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below", SwingConstants.LEFT);
-	private int elements=0;
 	
 	ReceiptLoader()
 	{
@@ -81,10 +80,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 			if(line.equals(""))
 				;
 			else
-			{
 				listModel.addElement(line);
-				elements++;
-			}
 		}
 	}
 	private void deleteReceipt()
@@ -93,13 +89,12 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		file.delete();
 		
 		listModel.removeElementAt(receiptList.getSelectedIndex());
-		elements--;
 		
 		String receiptContent = "";
-		for(int count=0; count < elements; count++)
+		for(int count=0; count < listModel.getSize(); count++)
 			receiptContent += listModel.getElementAt(count) + "\n";
 		
-		editReceiptList(receiptContent);
+		saveReceiptList(receiptContent);
 	}
 	private void deleteAll()
 	{
@@ -108,14 +103,11 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		
 		for(int count=0; count < file.length; count++)
 			file[count].delete();
-		for(int count=0; count < elements;)
-		{
+		for(int count=0; count < listModel.getSize();)
 			listModel.removeElementAt(count);
-			elements--;
-		}
-		editReceiptList("");
+		saveReceiptList("");
 	}
-	private void editReceiptList(String newList)
+	private void saveReceiptList(String newList)
 	{
 		PrintWriter listWriter = null;
 		try

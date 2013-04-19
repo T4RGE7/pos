@@ -25,7 +25,6 @@ public class PinEditor extends JPanel implements ActionListener
 	private JComboBox<String> accessBox = new JComboBox<String>(accessOption);
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private JList<String> userList = null;
-	private int elements = 0;
 	private int administrators=0;
 	
 	PinEditor()
@@ -81,7 +80,6 @@ public class PinEditor extends JPanel implements ActionListener
 					key = randomKeyGenerator();
 				listModel.addElement(key + " " + accessOption[accessBox.getSelectedIndex()].substring(0,1)
 						+ " " + name);
-				elements++;
 				saveSecurityFile();
 				userField.setText("");
 			}
@@ -95,7 +93,6 @@ public class PinEditor extends JPanel implements ActionListener
 			else
 			{
 				listModel.removeElementAt(userList.getSelectedIndex());
-				elements--;
 				if(user.substring(7,8).equals("A"))
 					administrators--;
 				saveSecurityFile();
@@ -113,7 +110,7 @@ public class PinEditor extends JPanel implements ActionListener
 	private boolean isDuplicateKey(String key)
 	{
 		int index = -1;
-		for(int count=0; count < elements && index == -1; count++)
+		for(int count=0; count < listModel.getSize() && index == -1; count++)
 			listModel.getElementAt(count).indexOf(key);
 		return index > -1;
 	}
@@ -138,7 +135,6 @@ public class PinEditor extends JPanel implements ActionListener
 			else
 			{
 				listModel.addElement(line);
-				elements++;
 				if(line.substring(7,8).equals("A"))
 					administrators++;
 			}
@@ -158,7 +154,7 @@ public class PinEditor extends JPanel implements ActionListener
 			System.out.println("File not found");
 		}
 		String output = "";
-		for(int count=0; count < elements; count++)
+		for(int count=0; count < listModel.getSize(); count++)
 			output = output + listModel.getElementAt(count) + "\n";
 		outputStream.print(output);
 		outputStream.close();
