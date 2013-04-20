@@ -24,7 +24,7 @@ public class PinEditor extends JPanel implements ActionListener
 	private String[] accessOption = {"Server", "Administrator"};
 	private JComboBox<String> accessBox = new JComboBox<String>(accessOption);
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
-	private JList<String> userList = null;
+	private JList<String> userList = new JList<String>(listModel);
 	private int administrators=0;
 	
 	PinEditor()
@@ -43,7 +43,6 @@ public class PinEditor extends JPanel implements ActionListener
 		accessBox.setSelectedIndex(0);
 		
 		readSecurityFile();
-		userList = new JList<String>(listModel);
 		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		addPanel.add(new MenuButton("Add","Add",this));

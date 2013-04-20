@@ -18,7 +18,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	private JPanel upperPanel = new JPanel(new GridLayout(3,1));
 	private JPanel buttonPanel = new JPanel(new GridLayout(2,2));
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
-	private JList<String> receiptList = null;
+	private JList<String> receiptList = new JList<String>(listModel);
 	private JLabel titleLabel = new JLabel("Load Saved Receipts", SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below", SwingConstants.LEFT);
 	
@@ -28,7 +28,6 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		
 		readReceipts();
-		receiptList = new JList<String>(listModel);
 		receiptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		titleLabel.setVerticalAlignment(SwingConstants.TOP);

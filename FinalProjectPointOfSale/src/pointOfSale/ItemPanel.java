@@ -35,11 +35,7 @@ public class ItemPanel extends JPanel implements ActionListener
 		{
 			int category = Integer.parseInt(event.getActionCommand().substring(0,index));
 			int item = Integer.parseInt(event.getActionCommand().substring(index+1));
-			String itemLine = "[" + menuItem[category][item].getNumber() + "]\t"
-					+ "$" + menuItem[category][item].getPrice() + "\t"
-					+ menuItem[category][item].getName();
-			
-			ReceiptPanel.addItem(itemLine, menuItem[category][item].getPrice());
+			ReceiptPanel.addItem(menuItem[category][item].getPrice(), menuItem[category][item].getName());
 		}
 	}
 	
