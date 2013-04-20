@@ -23,6 +23,10 @@ public class ReceiptPanel extends JPanel
 	private static int subtotalAmount = 0;
 	private static String subtotalString = "";
 	
+	/**
+	 * Constructs the ReceiptPanel.  Sets the initial conditions of the panel and the receiptList JList object.
+	 * Adds a JScrollPane containing receiptList to this JPanel.
+	 */
 	ReceiptPanel()
 	{
 		setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
@@ -36,6 +40,12 @@ public class ReceiptPanel extends JPanel
 		add(new JScrollPane(receiptList, 
 				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 	}
+	/**
+	 * Static method called by the ItemPanel class to add an item to the receiptList.
+	 * Also adjusts the subtotals/totals to match the new receiptList elements.
+	 * @param itemPrice (String) Price of user selected item
+	 * @param itemName (String) Name of user selected item
+	 */
 	public static void addItem(String itemPrice, String itemName)
 	{
 		subtotalAmount = subtotalAmount + Integer.parseInt(itemPrice.substring(0,itemPrice.indexOf("."))) * 100
@@ -51,6 +61,10 @@ public class ReceiptPanel extends JPanel
 		listModel.addElement("Tax");
 		listModel.addElement("Total");
 	}
+	/**
+	 * Called by the Delete button in the CheckOutPanel class to remove an item from the receiptList.
+	 * Also adjusts the subtotals/totals to match the new receiptList elements.
+	 */
 	public static void deleteItem()
 	{
 		if(receiptList.getSelectedIndex() < listModel.getSize()-4)
@@ -76,6 +90,9 @@ public class ReceiptPanel extends JPanel
 			}
 		}
 	}
+	/**
+	 * Removes all elements from the receiptList and resets the total price to zero.
+	 */
 	public static void clearReceipt()
 	{
 		listModel.removeAllElements();
@@ -89,6 +106,12 @@ public class ReceiptPanel extends JPanel
 	{
 		
 	}
+	/**
+	 * JLists do not recgonize the tab character, so this inserts a manual tab that, while not perfect,
+	 * gets the job done.
+	 * @param entry First charcter, which the "tab" will follow
+	 * @return A variable number of blank spaces to act as a tab
+	 */
 	private static String manualTab(String entry)
 	{
 		String tab = "";
@@ -96,6 +119,9 @@ public class ReceiptPanel extends JPanel
 			tab += " ";
 		return tab;
 	}
+	/**
+	 * Changes the subtotal/total String representations to reflect the subtotal/total integer amount
+	 */
 	private static void updateTotals()
 	{
 		if(subtotalAmount % 100 > 9)
