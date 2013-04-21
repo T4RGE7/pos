@@ -30,4 +30,17 @@ public class Tools
 		contentPane.setVisible(false);
 		contentPane.setVisible(true);
 	}
+	public static String toMoney(String number)
+	{
+		if(number.length() == 1)
+			return "$.0" + number;
+		else if(number.length() == 2)
+			return "$." + number;
+		else
+			return "$" + number.substring(0,number.length()-2) + "." + number.substring(number.length()-2);
+	}
+	public static String toMoney(int number)
+	{
+		return toMoney(String.valueOf(number));
+	}
 }

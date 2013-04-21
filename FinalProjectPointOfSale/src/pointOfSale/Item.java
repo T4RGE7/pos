@@ -5,14 +5,12 @@ public class Item implements java.io.Serializable
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler
 	private String itemName;
 	private String itemPrice;
-	private String itemNumber;
 	private boolean isActive;
 	
-	Item(String newPrice, String newName, String newNumber, boolean activeState)
+	Item(String newPrice, String newName, boolean activeState)
 	{
 		itemPrice = newPrice;
 		itemName = newName;
-		itemNumber = newNumber;
 		isActive = activeState;
 	}
 	public String getPrice()
@@ -23,8 +21,8 @@ public class Item implements java.io.Serializable
 	{
 		return itemName;
 	}
-	public String getNumber()
+	public boolean isActive()
 	{
-		return itemNumber;
+		return isActive;
 	}
 }
