@@ -47,27 +47,24 @@ public class KeyPad extends JPanel implements ActionListener
 	{
 		JPanel subPanel = new JPanel(new GridLayout(1,4));
 		
-		MenuButton button1 = new MenuButton(String.valueOf(count),String.valueOf(count));
-		button1.addActionListener(this);
+		MenuButton button1 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
 		count++;
 		
-		MenuButton button2 = new MenuButton(String.valueOf(count),String.valueOf(count));
-		button2.addActionListener(this);
+		MenuButton button2 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
 		count++;
 		
 		MenuButton button3 = null;
 		if(count == 10)
-			button3 = new MenuButton("Clear","10");
+			button3 = new MenuButton("Clear","10",this);
 		else
-			button3 = new MenuButton(String.valueOf(count),String.valueOf(count));
-		button3.addActionListener(this);
+			button3 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
 		count++;
 		
 		MenuButton button4 = null;
 		if(count == 11)
-			button4 = new MenuButton("Enter","11");
+			button4 = new MenuButton("Enter","11",this);
 		else
-			button4 = new MenuButton(String.valueOf(count),String.valueOf(count));
+			button4 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
 		button4.addActionListener(this);
 		count++;
 		

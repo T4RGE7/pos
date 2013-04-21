@@ -17,7 +17,7 @@ public class LogInGUI extends JPanel implements ActionListener
 	private JPanel quarterPanel = new JPanel(new GridLayout(2,1));
 	private JPanel exitPanel = new JPanel(new GridLayout(4,2));
 	private KeyPad numberPad = new KeyPad();
-	private MenuButton exitButton = new MenuButton("Exit","Exit");
+	private MenuButton exitButton = new MenuButton("Exit","Exit",this);
 	
 	LogInGUI()
 	{	
@@ -30,7 +30,6 @@ public class LogInGUI extends JPanel implements ActionListener
 		exitPanel.setBackground(DARK_CHAMPAGNE);
 		exitPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		exitButton.setFont(new Font(Font.SERIF,Font.PLAIN,36));
-		exitButton.addActionListener(this);
 		
 		quarterPanel.add(numberPad);
 		quarterPanel.add(exitPanel);

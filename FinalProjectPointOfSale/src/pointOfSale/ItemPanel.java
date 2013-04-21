@@ -78,17 +78,15 @@ public class ItemPanel extends JPanel implements ActionListener
 		while(count < Category.getActiveCategories())
 		{
 			button[count] = new MenuButton(itemCategory[count].getCategoryName(),
-					itemCategory[count].getCategoryNumber());
+					itemCategory[count].getCategoryNumber(),this);
 			add(button[count]);
-			button[count].addActionListener(this);
 			count++;
 		}
 		while(count < 32)
 		{
-			button[count] = new MenuButton("null","null");
+			button[count] = new MenuButton("null","null",this);
 			button[count].setVisible(false);
 			add(button[count]);
-			button[count].addActionListener(this);
 			count++;
 		}
 	}
