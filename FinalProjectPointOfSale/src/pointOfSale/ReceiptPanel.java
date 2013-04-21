@@ -22,6 +22,7 @@ public class ReceiptPanel extends JPanel
 	private static JList<String> receiptList = new JList<String>(listModel);
 	private static int subtotalAmount = 0;
 	private static String subtotalString = "";
+	private static String newReceipt = "";
 	
 	/**
 	 * Constructs the ReceiptPanel.  Sets the initial conditions of the panel and the receiptList JList object.
@@ -100,7 +101,27 @@ public class ReceiptPanel extends JPanel
 	}
 	public static void saveReceipt()
 	{
+		PrintWriter listWriter = null;
+		PrintWriter contentWriter = null;
+		newReceipt = getTimeStamp();
 		
+		try
+		{
+			listWriter = new PrintWriter(new FileOutputStream(RECEIPT_LIST_FILE, true));
+			contentWriter = new PrintWriter(RECEIPT_PATH + newReceipt);
+		}
+		catch(FileNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null,"File Not Found");
+		}
+		
+		listWriter.println(newReceipt);
+		for(int count=0; count < listModel.getSize(); count++)
+			contentWriter.println(listModel.elementAt(count));
+		
+		listWriter.close();
+		contentWriter.close();
+		clearReceipt();
 	}
 	public static void loadReceipt(String receiptFile)
 	{
@@ -139,5 +160,11 @@ public class ReceiptPanel extends JPanel
 			subtotalString = "$" + String.valueOf(subtotalAmount/100) + "." + String.valueOf(subtotalAmount%100);
 		else
 			subtotalString = "$" + String.valueOf(subtotalAmount/100) + ".0" + String.valueOf(subtotalAmount%100);
+	}
+	private static String getTimeStamp()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+		Date date = new Date();
+		return dateFormat.format(date);
 	}
 }

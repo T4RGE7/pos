@@ -84,16 +84,13 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	}
 	private void deleteReceipt()
 	{
-		File file = new File(RECEIPT_PATH + receiptList.getSelectedValue());
+		File file = new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue());
 		file.delete();
 		
 		listModel.removeElementAt(receiptList.getSelectedIndex());
 		
-		String receiptContent = "";
-		for(int count=0; count < listModel.getSize(); count++)
-			receiptContent += listModel.getElementAt(count) + "\n";
-		
-		saveReceiptList(receiptContent);
+		saveReceiptList();
+		ReceiptPanel.clearReceipt();
 	}
 	private void deleteAll()
 	{
@@ -102,11 +99,11 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		
 		for(int count=0; count < file.length; count++)
 			file[count].delete();
-		for(int count=0; count < listModel.getSize();)
-			listModel.removeElementAt(count);
-		saveReceiptList("");
+		listModel.removeAllElements();
+		saveReceiptList();
+		ReceiptPanel.clearReceipt();
 	}
-	private void saveReceiptList(String newList)
+	private void saveReceiptList()
 	{
 		PrintWriter listWriter = null;
 		try
@@ -117,7 +114,8 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		{
 			System.out.println("File not found");
 		}
-		listWriter.println(newList);
+		for(int count = 0; count < listModel.getSize(); count++)
+			listWriter.println(listModel.getElementAt(count));
 		listWriter.close();
 	}
 }

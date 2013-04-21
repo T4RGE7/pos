@@ -1,13 +1,14 @@
 package pointOfSale;
-import javax.swing.JFrame;
-import java.awt.Container;
-import java.awt.GridLayout;
+import javax.swing.*;
+
+import java.awt.*;
 
 
 public class SystemInit extends JFrame
 {
 	private static final long serialVersionUID = 1L;
-	private static Container contentPane = new Container();
+	private static final Color DARK_GREEN = new Color(0,100,0);
+	private static JPanel systemFrame = new JPanel(new GridLayout(1,1));
 	
 	public static void main(String[] args)
 	{
@@ -22,34 +23,36 @@ public class SystemInit extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridLayout(1,1));
 		
-		contentPane = getContentPane();
+		systemFrame.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, DARK_GREEN));
+		
+		getContentPane().add(systemFrame);
 		
 		setLogInScreen();
 	}
 	
 	public static void setLogInScreen()
 	{
-		contentPane.removeAll();
-		contentPane.add(new LogInGUI());
-		Tools.update(contentPane);
+		systemFrame.removeAll();
+		systemFrame.add(new LogInGUI());
+		Tools.update(systemFrame);
 	}
 	
 	public static void setTransactionScreen()
 	{
-		contentPane.removeAll();
-		contentPane.add(new TransactionGUI());
-		Tools.update(contentPane);
+		systemFrame.removeAll();
+		systemFrame.add(new TransactionGUI());
+		Tools.update(systemFrame);
 	}
 	public static void setTransactionScreen(Boolean accessLevel)
 	{
-		contentPane.removeAll();
-		contentPane.add(new TransactionGUI(accessLevel));
-		Tools.update(contentPane);
+		systemFrame.removeAll();
+		systemFrame.add(new TransactionGUI(accessLevel));
+		Tools.update(systemFrame);
 	}
 	public static void setAdminScreen()
 	{
-		contentPane.removeAll();
-		contentPane.add(new AdministratorGUI());
-		Tools.update(contentPane);
+		systemFrame.removeAll();
+		systemFrame.add(new AdministratorGUI());
+		Tools.update(systemFrame);
 	}
 }

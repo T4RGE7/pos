@@ -11,7 +11,6 @@ public class LogInGUI extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
-	private static final Color DARK_GREEN = new Color(0,100,0);
 
 	private JPanel halfPanel = new JPanel(new GridLayout(1,2));
 	private JPanel quarterPanel = new JPanel(new GridLayout(2,1));
@@ -23,7 +22,7 @@ public class LogInGUI extends JPanel implements ActionListener
 	{	
 		setLayout(new GridLayout(1,2));
 		setBackground(DARK_CHAMPAGNE);
-		setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, DARK_GREEN));
+		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		Tools.addBlankSpace(exitPanel,7);
 		exitPanel.add(exitButton);

@@ -1,11 +1,6 @@
 package pointOfSale;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.BorderFactory;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -18,10 +13,13 @@ public class KeyPad extends JPanel implements ActionListener
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final String SECURITY_FILE = "Files/System/SecurityCodes";
 	
-	private JTextField numberField = new JTextField("",10);
+	private JPanel buttonRow1 = new JPanel(new GridLayout(1,4));
+	private JPanel buttonRow2 = new JPanel(new GridLayout(1,4));
+	private JPanel buttonRow3 = new JPanel(new GridLayout(1,4));
+	private JTextField numberField = new JTextField("",11);
 	private String numberCode = "";
-	private JLabel errorLabel = new JLabel("Invalid Code");
-	private int count=0;
+	private boolean validCode = false;
+	private boolean adminPrivilege = false;
 	
 	KeyPad()
 	{
@@ -32,48 +30,29 @@ public class KeyPad extends JPanel implements ActionListener
 		numberField.setEditable(false);
 		numberField.setBackground(Color.WHITE);
 		numberField.setFont(new Font(Font.SERIF,Font.PLAIN,18));
+		
+		buttonRow1.add(new MenuButton("0","0",this));
+		buttonRow1.add(new MenuButton("1","1",this));
+		buttonRow1.add(new MenuButton("2","2",this));
+		buttonRow1.add(new MenuButton("3","3",this));
+		
+		buttonRow2.add(new MenuButton("4","4",this));
+		buttonRow2.add(new MenuButton("5","5",this));
+		buttonRow2.add(new MenuButton("6","6",this));
+		buttonRow2.add(new MenuButton("7","7",this));
+		
+		buttonRow3.add(new MenuButton("8","8",this));
+		buttonRow3.add(new MenuButton("9","9",this));
+		buttonRow3.add(new MenuButton("Clear","10",this));
+		buttonRow3.add(new MenuButton("Enter","11",this));
+		
 		add(numberField);
-		
-		errorLabel.setFont(new Font(Font.SERIF,Font.BOLD,18));
-		errorLabel.setForeground(Color.RED);
-		errorLabel.setVisible(false);
-		
-		add(errorLabel);
-		addButtonRow(this);
-		addButtonRow(this);
-		addButtonRow(this);
+		Tools.addBlankSpace(this,1);
+		add(buttonRow1);
+		add(buttonRow2);
+		add(buttonRow3);
 	}
-	private void addButtonRow(JPanel panel)
-	{
-		JPanel subPanel = new JPanel(new GridLayout(1,4));
-		
-		MenuButton button1 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
-		count++;
-		
-		MenuButton button2 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
-		count++;
-		
-		MenuButton button3 = null;
-		if(count == 10)
-			button3 = new MenuButton("Clear","10",this);
-		else
-			button3 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
-		count++;
-		
-		MenuButton button4 = null;
-		if(count == 11)
-			button4 = new MenuButton("Enter","11",this);
-		else
-			button4 = new MenuButton(String.valueOf(count),String.valueOf(count),this);
-		button4.addActionListener(this);
-		count++;
-		
-		subPanel.add(button1);
-		subPanel.add(button2);
-		subPanel.add(button3);
-		subPanel.add(button4);
-		panel.add(subPanel);
-	}
+	
 	public void actionPerformed(ActionEvent event)
 	{
 		if(Integer.parseInt(event.getActionCommand()) < 10)
@@ -83,47 +62,48 @@ public class KeyPad extends JPanel implements ActionListener
 				numberCode = numberCode + event.getActionCommand();
 				numberField.setText(numberField.getText() + "*");
 			}
-			errorLabel.setVisible(false);
 		}
 		else if (event.getActionCommand().equals("10"))
 		{
 			numberCode = "";
 			numberField.setText("");
-			errorLabel.setVisible(false);
 		}
 		else if (event.getActionCommand().equals("11"))
-		{
 			checkCode();
-		}
 	}
+	
 	private void checkCode()
 	{
 		Scanner inputStream = null;
-		
 		try
 		{
 			inputStream = new Scanner(new File(SECURITY_FILE));
-			
-			while(inputStream.hasNextLine())
-			{
-				String line = inputStream.nextLine();
-				
-				if(line.equals(""))
-					;
-				else
-				{
-					String code = line.substring(0,6);
-					String accessLevel = line.substring(7,8);
-					if(numberCode.equals(code))
-						SystemInit.setTransactionScreen(accessLevel.equals("A"));
-					else
-						errorLabel.setVisible(true);
-				}
-			}
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("File not found");
+			JOptionPane.showMessageDialog(null,"ERROR: File Not Found");
+		}
+			
+		while(inputStream.hasNextLine() && !validCode)
+		{
+			String line = inputStream.nextLine();
+				
+			if(line.equals(""))
+				;
+			else
+			{
+				validCode = numberCode.equals(line.substring(0,6));
+				adminPrivilege = line.substring(7,8).equals("A");
+			}
+		}
+		
+		if(validCode)
+			SystemInit.setTransactionScreen(adminPrivilege);
+		else
+		{
+			JOptionPane.showMessageDialog(null,"ERROR: Invald Security Code");
+			numberCode = "";
+			numberField.setText("");
 		}
 	}
 }
