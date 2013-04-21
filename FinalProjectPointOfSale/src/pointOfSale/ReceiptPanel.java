@@ -104,7 +104,18 @@ public class ReceiptPanel extends JPanel
 	}
 	public static void loadReceipt(String receiptFile)
 	{
-		
+		Scanner inputStream = null;
+		try
+		{
+			inputStream = new Scanner(new File(RECEIPT_PATH + receiptFile));
+		}
+		catch(FileNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null,"File Not Found");
+		}
+		clearReceipt();
+		while(inputStream.hasNextLine())
+			listModel.addElement(inputStream.nextLine());
 	}
 	/**
 	 * JLists do not recgonize the tab character, so this inserts a manual tab that, while not perfect,
