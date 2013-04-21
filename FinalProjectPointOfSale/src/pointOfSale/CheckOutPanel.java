@@ -17,7 +17,6 @@ public class CheckOutPanel extends JPanel implements ActionListener
 	private MenuButton checkoutButton[] = new MenuButton[6];
 	private JPanel top = new JPanel(new GridLayout(3,3));
 	private JPanel bottom = new JPanel(new GridLayout(2,1));
-	private ItemPanel restaurantMenu = null;
 	private JLabel adminLabel = new JLabel("ADMIN: ");
 	private JTextField deleteField = new JTextField("",11);
 	
@@ -27,14 +26,11 @@ public class CheckOutPanel extends JPanel implements ActionListener
 		setBackground(DARK_CHAMPAGNE);
 		setLayout(new GridLayout(2,1));
 		
-		restaurantMenu = newMenu;
-		
 		checkoutButton[0] = new MenuButton("System","System",this);
 		checkoutButton[1] = new MenuButton("Clear","Clear",this);
 		checkoutButton[2] = new MenuButton("Log Off","Log Off",this);
-		checkoutButton[3] = new MenuButton("Categories","Categories",this);
-		checkoutButton[4] = new MenuButton("Delete Item","Delete Item",this);
-		checkoutButton[5] = new MenuButton("Checkout","Checkout",this);
+		checkoutButton[3] = new MenuButton("Delete Item","Delete Item",this);
+		checkoutButton[4] = new MenuButton("Checkout","Checkout",this);
 		
 		adminLabel.setFont(new Font(Font.SERIF,Font.BOLD,18));
 		adminLabel.setForeground(Color.RED);
@@ -47,14 +43,14 @@ public class CheckOutPanel extends JPanel implements ActionListener
 		top.add(checkoutButton[0]);
 		top.add(checkoutButton[1]);
 		top.add(checkoutButton[2]);
+		Tools.addBlankSpace(top, 1);
 		top.add(checkoutButton[3]);
-		top.add(checkoutButton[4]);
 		top.add(deleteField);
 		Tools.addBlankSpace(top, 1);
 		
 		bottom.setBackground(DARK_CHAMPAGNE);
 		Tools.addBlankSpace(bottom,1);
-		bottom.add(checkoutButton[5]);
+		bottom.add(checkoutButton[4]);
 		
 		add(top);
 		add(bottom);
@@ -75,8 +71,6 @@ public class CheckOutPanel extends JPanel implements ActionListener
 	{
 		if(event.getActionCommand().equals("Log Off"))
 			SystemInit.setLogInScreen();
-		else if(event.getActionCommand().equals("Categories"))
-			restaurantMenu.displayCategories();
 		else if(event.getActionCommand().equals("Clear"))
 			ReceiptPanel.clearReceipt();
 		else if(event.getActionCommand().equals("Delete Item"))
