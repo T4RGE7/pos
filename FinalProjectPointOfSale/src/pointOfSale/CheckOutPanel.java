@@ -21,7 +21,7 @@ public class CheckOutPanel extends JPanel implements ActionListener
 	private JTextField deleteField = new JTextField("",11);
 	
 	
-	CheckOutPanel(boolean adminPrivilege, ItemPanel newMenu)
+	CheckOutPanel(boolean adminPrivilege)
 	{
 		setBackground(DARK_CHAMPAGNE);
 		setLayout(new GridLayout(2,1));

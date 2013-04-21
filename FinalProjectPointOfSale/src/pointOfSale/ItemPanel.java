@@ -2,8 +2,7 @@ package pointOfSale;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class ItemPanel extends JPanel implements ActionListener, MouseListener
@@ -22,10 +21,11 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 		setBackground(DARK_CHAMPAGNE);
 		setLayout(new GridLayout(8,4));
 		
-		initializeCategories();
-		initializeButtons();
+		initializeArrays();
 		
-		addMouseListener(this);
+		//addMouseListener(this);
+		
+		//displayCategories();
 	}
 	
 	public void actionPerformed(ActionEvent event)
@@ -58,6 +58,20 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 	public void mouseExited(MouseEvent event)
 	{
 	}
+	public void displayCategories()
+	{
+		for(int count = 0; count < 16; count++)
+		{
+			button[count].setText(itemCategory[count].getCategoryName());
+			button[count].setActionCommand(itemCategory[count].getCategoryNumber());
+			button[count].setVisible(true);
+		}
+		for(int count = 16; count < 32; count++)
+		{
+			button[count].setVisible(false);
+		}
+		Tools.update(this);
+	}
 	private void displayItems(int category)
 	{
 		int count = 0;
@@ -75,26 +89,10 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 		}
 		Tools.update(this);
 	}
-	
-	public void displayCategories()
-	{
-		for(int count = 0; count < Category.getActiveCategories(); count++)
-		{
-			button[count].setText(itemCategory[count].getCategoryName());
-			button[count].setActionCommand(itemCategory[count].getCategoryNumber());
-			button[count].setVisible(true);
-		}
-		for(int count = Category.getActiveCategories(); count < 32; count++)
-		{
-			button[count].setVisible(false);
-		}
-		Tools.update(this);
-	}
-	
 	private void initializeButtons()
 	{
 		int count = 0;
-		while(count < Category.getActiveCategories())
+		while(count < 16)
 		{
 			button[count] = new MenuButton(itemCategory[count].getCategoryName(),
 					itemCategory[count].getCategoryNumber(),this);
@@ -102,6 +100,7 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			add(button[count]);
 			count++;
 		}
+		JOptionPane.showMessageDialog(null,"First Loop Complete");
 		while(count < 32)
 		{
 			button[count] = new MenuButton("null","null",this);
@@ -111,9 +110,45 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			count++;
 		}
 	}
+	
+	private void initializeArrays()
+	{
+		ObjectInputStream readCategories = null;
+		ObjectInputStream readItems = null;
+		
+		try
+		{
+			readCategories = new ObjectInputStream(new FileInputStream("Files/Menu/CategoryArray"));
+			readItems = new ObjectInputStream(new FileInputStream("Files/Menu/MenuItemArray"));
+			
+			itemCategory = (Category[]) readCategories.readObject();
+			menuItem = (Item[][]) readItems.readObject();
+		}
+		catch(IOException e)
+		{
+			JOptionPane.showMessageDialog(null,"ERROR: Arrays Not Loaded Correctly");
+		}
+		catch(ClassNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null,"ERROR: Local Array Class Not Found");
+		}
+	}
+	
+	private void serializeArrays()
+	{
+		Scanner categoryStream = null;
+		try
+		{
+			categoryStream = new Scanner(new File("Files/Menu/Categories"));
+		}
+		catch(FileNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null,"Array File Not Found");
+		}
+	}
 	private void initializeCategories()
 	{
-		Category.resetActiveCategories();
+		//Category.resetActiveCategories();
 		Scanner inputStream = null;
 		try
 		{
@@ -132,13 +167,30 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 				;
 			else
 			{
-				itemCategory[count] = new Category(line,count);
+				itemCategory[count] = new Category(line,count,true);
 				initializeMenuItems(count);
 				count++;
 			}
 		}
 		inputStream.close();
+		
+		ObjectOutputStream categoryOut = null;
+		ObjectOutputStream menuItemOut = null;
+		try
+		{
+			categoryOut= new ObjectOutputStream(new FileOutputStream("Files/Menu/CategoryArray"));
+			menuItemOut = new ObjectOutputStream(new FileOutputStream("Files/Menu/MenuItemArray"));
+			
+			categoryOut.writeObject(itemCategory);
+			menuItemOut.writeObject(menuItem);
+		}
+		catch(IOException e)
+		{
+			JOptionPane.showMessageDialog(null, "ERROR: Array Not Saved");
+		}
 	}
+	
+	
 	private void initializeMenuItems(int categoryNumber)
 	{
 		Scanner inputStream = null;

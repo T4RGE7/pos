@@ -14,7 +14,7 @@ public class TransactionGUI extends JPanel
 	private JPanel halfPanel = new JPanel(new GridLayout(1,2));
 	private JPanel quarterPanel = new JPanel(new GridLayout(2,1));
 	
-	TransactionGUI(boolean accessLevel)
+	TransactionGUI()
 	{
 		setLayout(new GridLayout(1,2));
 		setBackground(DARK_CHAMPAGNE);
@@ -24,10 +24,8 @@ public class TransactionGUI extends JPanel
 		
 		restaurantMenu = new ItemPanel();
 		
-		adminPrivilege = accessLevel;
-		
 		Tools.addBlankSpace(quarterPanel,1);
-		quarterPanel.add(new CheckOutPanel(adminPrivilege,restaurantMenu));
+		quarterPanel.add(new CheckOutPanel(adminPrivilege));
 		
 		halfPanel.add(new ReceiptPanel());
 		halfPanel.add(quarterPanel);
@@ -36,8 +34,9 @@ public class TransactionGUI extends JPanel
 		add(restaurantMenu);
 		
 	}
-	TransactionGUI()
+	
+	public static void setAdminPrivilege(boolean newAdminPrivilege)
 	{
-		this(adminPrivilege);
+		adminPrivilege = newAdminPrivilege;
 	}
 }

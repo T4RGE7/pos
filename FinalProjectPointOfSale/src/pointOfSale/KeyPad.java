@@ -98,7 +98,10 @@ public class KeyPad extends JPanel implements ActionListener
 		}
 		
 		if(validCode)
-			SystemInit.setTransactionScreen(adminPrivilege);
+		{
+			TransactionGUI.setAdminPrivilege(adminPrivilege);
+			SystemInit.setTransactionScreen();
+		}
 		else
 		{
 			JOptionPane.showMessageDialog(null,"ERROR: Invald Security Code");

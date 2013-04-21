@@ -43,12 +43,6 @@ public class SystemInit extends JFrame
 		systemFrame.add(new TransactionGUI());
 		Tools.update(systemFrame);
 	}
-	public static void setTransactionScreen(Boolean accessLevel)
-	{
-		systemFrame.removeAll();
-		systemFrame.add(new TransactionGUI(accessLevel));
-		Tools.update(systemFrame);
-	}
 	public static void setAdminScreen()
 	{
 		systemFrame.removeAll();
