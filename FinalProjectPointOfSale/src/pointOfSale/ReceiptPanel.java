@@ -118,9 +118,9 @@ public class ReceiptPanel extends JPanel
 			listModel.addElement(inputStream.nextLine());
 	}
 	/**
-	 * JLists do not recgonize the tab character, so this inserts a manual tab that, while not perfect,
+	 * JLists do not recognize the tab character, so this inserts a manual tab that, while not perfect,
 	 * gets the job done.
-	 * @param entry First charcter, which the "tab" will follow
+	 * @param entry First character, which the "tab" will follow
 	 * @return A variable number of blank spaces to act as a tab
 	 */
 	private static String manualTab(String entry)
