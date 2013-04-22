@@ -65,7 +65,7 @@ public class ReceiptPanel extends JPanel
 	 */
 	public static void deleteItem()
 	{
-		if(receiptList.getSelectedIndex() < listModel.getSize()-4)
+		if(receiptList.getSelectedIndex() < listModel.getSize()-4 && receiptList.getSelectedIndex() > -1)
 		{
 			String itemPrice = receiptList.getSelectedValue().substring(0,
 																receiptList.getSelectedValue().indexOf(" "));
