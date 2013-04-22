@@ -12,7 +12,6 @@ public class LogInGUI extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final Color DARK_GREEN = new Color(0,100,0);
-	private static final  Color PALE_GOLDENROD = new Color(238,232,170);
 
 	private JPanel halfPanel = new JPanel(new GridLayout(1,2));
 	private JPanel quarterPanel = new JPanel(new GridLayout(2,1));
