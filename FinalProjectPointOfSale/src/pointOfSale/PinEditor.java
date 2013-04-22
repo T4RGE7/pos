@@ -70,6 +70,9 @@ public class PinEditor extends JPanel implements ActionListener
 		if(event.getActionCommand().equals("Add"))
 		{
 			String name = userField.getText().trim();
+			if(name.equals("Enter User Name"))
+				name = "";
+			
 			if (name.equals(""))
 				JOptionPane.showMessageDialog(null, "Invalid User Name");
 			else

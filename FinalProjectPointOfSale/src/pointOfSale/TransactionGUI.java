@@ -58,7 +58,7 @@ public class TransactionGUI extends JPanel implements ActionListener
 		Tools.addBlankSpace(checkoutButtonPanel,2);
 		checkoutButtonPanel.add(checkoutButton);
 		
-		transactionPanel.setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
+		transactionPanel.setBorder(BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE));
 		transactionPanel.setBackground(DARK_CHAMPAGNE);
 		transactionPanel.add(receiptButtonPanel);
 		transactionPanel.add(logoPanel);
