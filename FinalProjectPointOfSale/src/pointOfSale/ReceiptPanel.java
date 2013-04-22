@@ -17,10 +17,13 @@ public class ReceiptPanel extends JPanel
 	private static final String RECEIPT_LIST_FILE = RECEIPT_PATH + "ReceiptList";
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final  Color PALE_GOLDENROD = new Color(238,232,170);
+	private static final int SALES_TAX = 5;
 	
 	private static DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private static JList<String> receiptList = new JList<String>(listModel);
-	private static int subtotalAmount = 0;
+	private static long subtotalAmount = 0;
+	private static long taxAmount = 0;
+	private static long totalAmount = 0;
 	private static String newReceipt = "";
 	
 	/**
@@ -49,6 +52,7 @@ public class ReceiptPanel extends JPanel
 	public static void addItem(String itemPrice, String itemName)
 	{
 		subtotalAmount = subtotalAmount + Integer.parseInt(itemPrice);
+		updateTotals();
 		
 		if(listModel.getSize() > 1)
 			for(int count=0; count < 4; count++)
@@ -56,8 +60,8 @@ public class ReceiptPanel extends JPanel
 		listModel.addElement(Tools.toMoney(itemPrice) + manualTab(itemPrice) + itemName);
 		listModel.addElement(" ");
 		listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
-		listModel.addElement("Tax");
-		listModel.addElement("Total");
+		listModel.addElement(Tools.toMoney(taxAmount) + manualTab(Tools.toMoney(taxAmount)) + "Tax");
+		listModel.addElement(Tools.toMoney(totalAmount) + manualTab(Tools.toMoney(totalAmount)) + "Total");
 	}
 	/**
 	 * Called by the Delete button in the CheckOutPanel class to remove an item from the receiptList.
@@ -71,6 +75,7 @@ public class ReceiptPanel extends JPanel
 																receiptList.getSelectedValue().indexOf(" "));
 			
 			subtotalAmount = subtotalAmount - Tools.toAmount(itemPrice);
+			updateTotals();
 			
 			listModel.removeElementAt(receiptList.getSelectedIndex());
 			if(listModel.getSize() == 4)
@@ -81,8 +86,8 @@ public class ReceiptPanel extends JPanel
 					listModel.removeElementAt(listModel.getSize()-1);
 				listModel.addElement(" ");
 				listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
-				listModel.addElement("Tax");
-				listModel.addElement("Total");
+				listModel.addElement(Tools.toMoney(taxAmount) + manualTab(Tools.toMoney(taxAmount)) + "Tax");
+				listModel.addElement(Tools.toMoney(totalAmount) + manualTab(Tools.toMoney(totalAmount)) + "Total");
 			}
 		}
 	}
@@ -93,6 +98,8 @@ public class ReceiptPanel extends JPanel
 	{
 		listModel.removeAllElements();
 		subtotalAmount = 0;
+		taxAmount = 0;
+		totalAmount = 0;
 	}
 	public static void saveReceipt()
 	{
@@ -132,6 +139,11 @@ public class ReceiptPanel extends JPanel
 		clearReceipt();
 		while(inputStream.hasNextLine())
 			listModel.addElement(inputStream.nextLine());
+	}
+	private static void updateTotals()
+	{
+		taxAmount = Math.round(subtotalAmount * SALES_TAX / 100.0);
+		totalAmount = subtotalAmount + taxAmount;
 	}
 	/**
 	 * JLists do not recognize the tab character, so this inserts a manual tab that, while not perfect,

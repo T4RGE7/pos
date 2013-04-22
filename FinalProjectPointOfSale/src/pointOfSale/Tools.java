@@ -39,17 +39,17 @@ public class Tools
 		else
 			return "$" + number.substring(0,number.length()-2) + "." + number.substring(number.length()-2);
 	}
-	public static String toMoney(int number)
+	public static String toMoney(long number)
 	{
 		return toMoney(String.valueOf(number));
 	}
-	public static int toAmount(String price)
+	public static long toAmount(String price)
 	{
 		if(price.charAt(0) == '$')
 			price = price.substring(1);
 		price = price.substring(0,price.indexOf(".")) + price.substring(price.indexOf(".")+1);
 		
-		return Integer.parseInt(price);
+		return Long.parseLong(price);
 	}
 	public static boolean isMoney(String amount)
 	{
