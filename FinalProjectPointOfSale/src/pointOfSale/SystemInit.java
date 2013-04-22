@@ -18,7 +18,7 @@ public class SystemInit extends JFrame
 	
 	SystemInit()
 	{
-		setUndecorated(false);
+		setUndecorated(true);
 		setExtendedState(MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridLayout(1,1));

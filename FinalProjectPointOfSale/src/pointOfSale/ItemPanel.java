@@ -20,7 +20,7 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		setBackground(DARK_CHAMPAGNE);
 		setLayout(new GridLayout(8,4));
-		
+	
 		addMouseListener(this);
 		
 		initializeArrays();
