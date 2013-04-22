@@ -5,6 +5,8 @@ import java.awt.Container;
 
 public class Tools 
 {
+	private static int index;
+	
 	/**
 	 * Adds a specified number of blank spaces to a container in the form of invisible labels.  Intended
 	 * to be used with the GridLayout layout manager when customizing the interface.
@@ -47,7 +49,21 @@ public class Tools
 	{
 		if(price.charAt(0) == '$')
 			price = price.substring(1);
-		price = price.substring(0,price.indexOf(".")) + price.substring(price.indexOf(".")+1);
+		
+		index = price.indexOf(".");
+		
+		if(index == -1)
+			price = price + "00";
+		else if(index == price.length()-1)
+			price = price.substring(0,price.length()-1) + "00";
+		else if(index == 0 && price.length() == 2)
+			price = price.substring(1) + "0";
+		else if(index == 0 && price.length() == 3)
+			price = price.substring(1);
+		else if(price.substring(index).length() == 2)
+			price = price.substring(0,price.indexOf(".")) + price.substring(price.indexOf(".")+1) + "0";
+		else
+			price = price.substring(0,price.indexOf(".")) + price.substring(price.indexOf(".")+1);
 		
 		return Long.parseLong(price);
 	}
@@ -55,10 +71,13 @@ public class Tools
 	{
 		if(amount.charAt(0) == '$' && amount.length() > 1)
 			amount = amount.substring(1);
-		return amount.indexOf(".") > -1  &&
-			   amount.indexOf(".") < amount.length()-1  &&
-			   amount.substring(amount.indexOf(".")).length() == 3  &&
-			   isNonNegativeNumber(amount);
+		
+		index = amount.indexOf(".");
+		
+		if(index == -1 || amount.substring(index).length() < 4)
+			return isNonNegativeNumber(amount);
+		else
+			return false;
 	}
 	public static boolean isNonNegativeNumber(String value)
 	{

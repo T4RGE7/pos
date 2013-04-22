@@ -97,7 +97,7 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		itemNameFieldPanel.add(itemNameField);
 		
 		itemPriceFieldPanel.setBackground(DARK_CHAMPAGNE);
-		itemPriceFieldPanel.add(new JLabel("New Item Price (Format: 0.00):",SwingConstants.RIGHT));
+		itemPriceFieldPanel.add(new JLabel("New Item Price:",SwingConstants.RIGHT));
 		itemPriceFieldPanel.add(itemPriceField);
 		
 		itemLower.add(itemButtons);
