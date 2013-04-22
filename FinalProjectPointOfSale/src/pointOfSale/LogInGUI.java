@@ -1,5 +1,8 @@
 package pointOfSale;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +12,7 @@ public class LogInGUI extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final Color DARK_GREEN = new Color(0,100,0);
+	private static final  Color PALE_GOLDENROD = new Color(238,232,170);
 
 	private JPanel halfPanel = new JPanel(new GridLayout(1,2));
 	private JPanel quarterPanel = new JPanel(new GridLayout(2,1));
@@ -18,6 +22,10 @@ public class LogInGUI extends JPanel implements ActionListener
 	private MenuButton exitButton = new MenuButton("Exit","Exit",this);
 	private ImageIcon logo = new ImageIcon("Files/Icons/logoBig.jpg");
 	private JLabel logoLabel = new JLabel(logo,SwingConstants.CENTER);
+	private Border margin = BorderFactory.createMatteBorder(125,25,125,25,DARK_CHAMPAGNE);
+	private Border edge = BorderFactory.createBevelBorder(BevelBorder.LOWERED,
+										DARK_CHAMPAGNE,DARK_CHAMPAGNE);
+	
 	
 	LogInGUI()
 	{	
@@ -26,9 +34,8 @@ public class LogInGUI extends JPanel implements ActionListener
 		setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		logoLabel.setVerticalAlignment(SwingConstants.CENTER);
-		logoPanel.setBackground(DARK_CHAMPAGNE);
-		logoPanel.setBorder(BorderFactory.createEtchedBorder());
-		//logoPanel.setBorder(BorderFactory.createMatteBorder(50,50,50,50, DARK_CHAMPAGNE));
+		logoPanel.setBorder(BorderFactory.createCompoundBorder(margin,edge));
+		logoPanel.setBackground(DARK_GREEN);
 		logoPanel.add(logoLabel); 
 		
 		Tools.addBlankSpace(exitPanel,7);
