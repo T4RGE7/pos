@@ -55,10 +55,10 @@ public class Tools
 	{
 		if(amount.charAt(0) == '$' && amount.length() > 1)
 			amount = amount.substring(1);
-		
+		System.out.println(amount.substring(amount.indexOf(".")));
 		return amount.indexOf(".") > -1  &&
 			   amount.indexOf(".") < amount.length()-1  &&
-			   amount.substring(amount.indexOf(".")).length() < 4  &&
+			   amount.substring(amount.indexOf(".")).length() == 3  &&
 			   isNonNegativeNumber(amount);
 	}
 	public static boolean isNonNegativeNumber(String value)
