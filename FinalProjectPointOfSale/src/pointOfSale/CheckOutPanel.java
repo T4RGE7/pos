@@ -31,6 +31,7 @@ public class CheckOutPanel extends JPanel implements ActionListener
 		checkoutButton[2] = new MenuButton("Log Off","Log Off",this);
 		checkoutButton[3] = new MenuButton("Delete Item","Delete Item",this);
 		checkoutButton[4] = new MenuButton("Checkout","Checkout",this);
+		checkoutButton[4].setFont(new Font(Font.SERIF,Font.PLAIN,27));
 		
 		adminLabel.setFont(new Font(Font.SERIF,Font.BOLD,18));
 		adminLabel.setForeground(Color.RED);

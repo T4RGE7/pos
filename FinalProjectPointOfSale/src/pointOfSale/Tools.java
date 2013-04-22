@@ -43,4 +43,12 @@ public class Tools
 	{
 		return toMoney(String.valueOf(number));
 	}
+	public static int toAmount(String price)
+	{
+		if(price.charAt(0) == '$')
+			price = price.substring(1);
+		price = price.substring(0,price.indexOf(".")) + price.substring(price.indexOf(".")+1);
+		
+		return Integer.parseInt(price);
+	}
 }

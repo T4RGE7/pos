@@ -25,4 +25,24 @@ public class Item implements java.io.Serializable
 	{
 		return isActive;
 	}
+	public void setPrice(String newPrice)
+	{
+		itemPrice = newPrice;
+	}
+	public void setName(String newName)
+	{
+		itemName = newName;
+	}
+	public void addItem(String newPrice, String newName)
+	{
+		itemPrice = newPrice;
+		itemName = newName;
+		isActive = true;
+	}
+	public void deleteItem()
+	{
+		itemPrice = "Empty";
+		itemName = "Empty";
+		isActive = false;
+	}
 }

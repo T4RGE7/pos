@@ -21,7 +21,6 @@ public class ReceiptPanel extends JPanel
 	private static DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private static JList<String> receiptList = new JList<String>(listModel);
 	private static int subtotalAmount = 0;
-	private static String subtotalString = "";
 	private static String newReceipt = "";
 	
 	/**
@@ -49,16 +48,14 @@ public class ReceiptPanel extends JPanel
 	 */
 	public static void addItem(String itemPrice, String itemName)
 	{
-		subtotalAmount = subtotalAmount + Integer.parseInt(itemPrice.substring(0,itemPrice.indexOf("."))) * 100
-				+ Integer.parseInt(itemPrice.substring(itemPrice.indexOf(".")+1));
-		updateTotals();
+		subtotalAmount = subtotalAmount + Integer.parseInt(itemPrice);
 		
 		if(listModel.getSize() > 1)
 			for(int count=0; count < 4; count++)
 				listModel.removeElementAt(listModel.getSize()-1);
-		listModel.addElement("$" + itemPrice + manualTab(itemPrice) + itemName);
+		listModel.addElement(Tools.toMoney(itemPrice) + manualTab(itemPrice) + itemName);
 		listModel.addElement(" ");
-		listModel.addElement(subtotalString + manualTab(subtotalString) + "Subtotal");
+		listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
 		listModel.addElement("Tax");
 		listModel.addElement("Total");
 	}
@@ -70,12 +67,10 @@ public class ReceiptPanel extends JPanel
 	{
 		if(receiptList.getSelectedIndex() < listModel.getSize()-4)
 		{
-			String itemPrice = receiptList.getSelectedValue();
-			itemPrice = itemPrice.substring(1,itemPrice.indexOf(" "));
+			String itemPrice = receiptList.getSelectedValue().substring(0,
+																receiptList.getSelectedValue().indexOf(" "));
 			
-			subtotalAmount = subtotalAmount - Integer.parseInt(itemPrice.substring(0,itemPrice.indexOf("."))) * 100
-					- Integer.parseInt(itemPrice.substring(itemPrice.indexOf(".")+1));
-			updateTotals();
+			subtotalAmount = subtotalAmount - Tools.toAmount(itemPrice);
 			
 			listModel.removeElementAt(receiptList.getSelectedIndex());
 			if(listModel.getSize() == 4)
@@ -85,7 +80,7 @@ public class ReceiptPanel extends JPanel
 				for(int count=0; count < 4; count++)
 					listModel.removeElementAt(listModel.getSize()-1);
 				listModel.addElement(" ");
-				listModel.addElement(subtotalString + manualTab(subtotalString) + "Subtotal");
+				listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
 				listModel.addElement("Tax");
 				listModel.addElement("Total");
 			}
@@ -150,16 +145,6 @@ public class ReceiptPanel extends JPanel
 		for(int count=0; count < 15 - entry.length(); count++)
 			tab += " ";
 		return tab;
-	}
-	/**
-	 * Changes the subtotal/total String representations to reflect the subtotal/total integer amount
-	 */
-	private static void updateTotals()
-	{
-		if(subtotalAmount % 100 > 9)
-			subtotalString = "$" + String.valueOf(subtotalAmount/100) + "." + String.valueOf(subtotalAmount%100);
-		else
-			subtotalString = "$" + String.valueOf(subtotalAmount/100) + ".0" + String.valueOf(subtotalAmount%100);
 	}
 	private static String getTimeStamp()
 	{

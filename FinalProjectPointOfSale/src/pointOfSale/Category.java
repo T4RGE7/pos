@@ -5,29 +5,17 @@ public class Category implements java.io.Serializable
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler
 	
 	private String categoryName;
-	private String categoryNumber;
-	private int categoryItems;
 	private boolean isActive;
 	
-	Category(String newName, int newNumber, boolean activeState)
+	Category(String newName, boolean activeState)
 	{
 		categoryName = newName;
-		categoryNumber = String.valueOf(newNumber);
-		categoryItems = 0;
 		isActive = activeState;
 	}
 	
 	public String getCategoryName()
 	{
 		return categoryName;
-	}
-	public String getCategoryNumber()
-	{
-		return categoryNumber;
-	}
-	public int getCategoryItems()
-	{
-		return categoryItems;
 	}
 	public boolean isActive()
 	{
@@ -37,16 +25,14 @@ public class Category implements java.io.Serializable
 	{
 		categoryName = newName;
 	}
-	public void setCategoryNumber(int newNumber)
+	public void addCategory(String newName)
 	{
-		categoryNumber = String.valueOf(newNumber);
+		categoryName = newName;
+		isActive = true;
 	}
-	public void setActive(boolean activeState)
+	public void deleteCategory()
 	{
-		isActive = activeState;
-	}
-	public void addCategoryItem()
-	{
-		categoryItems++;
+		categoryName = "Empty";
+		isActive = false;
 	}
 }
