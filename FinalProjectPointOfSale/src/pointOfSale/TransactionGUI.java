@@ -18,6 +18,7 @@ public class TransactionGUI extends JPanel implements ActionListener
 	private JPanel transactionPanel = new JPanel(new GridLayout(3,1));
 	private JPanel receiptButtonPanel = new JPanel(new GridLayout(4,3));
 	private JPanel logoPanel = new JPanel(new GridLayout(1,1));
+	private ItemPanel menuPanel = new ItemPanel();
 	private JPanel checkoutButtonPanel = new JPanel(new GridLayout(3,1));
 	private MenuButton systemButton = new MenuButton("System","System",this);
 	private MenuButton checkoutButton = new MenuButton("Checkout","Checkout",this);
@@ -43,10 +44,10 @@ public class TransactionGUI extends JPanel implements ActionListener
 		receiptButtonPanel.setBackground(DARK_CHAMPAGNE);
 		receiptButtonPanel.add(new MenuButton("Delete Line","Delete Line",this));
 		receiptButtonPanel.add(new MenuButton("Delete All","Delete All",this));
-		receiptButtonPanel.add(new MenuButton("Log Off","Log Off",this));
-		Tools.addBlankSpace(receiptButtonPanel,1);
+		receiptButtonPanel.add(new MenuButton("Log Off","Log Off",this));;
 		receiptButtonPanel.add(adminLabel);
 		receiptButtonPanel.add(systemButton);
+		receiptButtonPanel.add(new MenuButton("Categories","Categories",this));
 		Tools.addBlankSpace(receiptButtonPanel,6);
 		
 		logoPanel.setBackground(DARK_GREEN);
@@ -79,7 +80,7 @@ public class TransactionGUI extends JPanel implements ActionListener
 		}
 		
 		add(halfPanel);
-		add(new ItemPanel());
+		add(menuPanel);
 		
 	}
 	public void actionPerformed(ActionEvent event)
@@ -94,6 +95,8 @@ public class TransactionGUI extends JPanel implements ActionListener
 			ReceiptPanel.saveReceipt();
 		else if(event.getActionCommand().equals("System"))
 			SystemInit.setAdminScreen();
+		else if(event.getActionCommand().equals("Categories"))
+			menuPanel.displayCategories();
 	}
 	
 	public static void setAdminPrivilege(boolean newAdminPrivilege)
