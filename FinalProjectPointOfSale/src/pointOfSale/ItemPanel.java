@@ -111,6 +111,9 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			
 			category = (Category[]) readCategories.readObject();
 			item = (Item[][]) readItems.readObject();
+
+			readCategories.close();
+			readItems.close();
 		}
 		catch(IOException e)
 		{

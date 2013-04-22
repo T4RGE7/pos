@@ -29,7 +29,7 @@ public class AdministratorGUI extends JPanel
 		
 		add(new ReceiptPanel());
 		add(quarterPanel1);
-		Tools.addBlankSpace(this,1);
+		add(new MenuEditor());
 		add(quarterPanel2);
 	}
 }
