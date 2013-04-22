@@ -1,6 +1,5 @@
 package pointOfSale;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
@@ -98,7 +97,7 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		itemNameFieldPanel.add(itemNameField);
 		
 		itemPriceFieldPanel.setBackground(DARK_CHAMPAGNE);
-		itemPriceFieldPanel.add(new JLabel("New Item Price:",SwingConstants.RIGHT));
+		itemPriceFieldPanel.add(new JLabel("New Item Price (Format: 0.00):",SwingConstants.RIGHT));
 		itemPriceFieldPanel.add(itemPriceField);
 		
 		itemLower.add(itemButtons);
@@ -151,11 +150,10 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			{
 				category[activeCats].addCategory(newName);
 				resetLists();
-				categoryList.setSelectedIndex(categoryModel.getSize()-1);
 			}
 			categoryNameField.setText("");
 		}
-		if(event.getActionCommand().equals("CatDelete"))
+		else if(event.getActionCommand().equals("CatDelete"))
 		{
 			for(int count = catIndex; count+1 < activeCats; count++)
 				category[count].addCategory(category[count+1].getCategoryName());
@@ -167,7 +165,7 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			
 			resetLists();
 		}
-		if(event.getActionCommand().equals("CatEdit"))
+		else if(event.getActionCommand().equals("CatEdit"))
 		{
 			String newName = categoryNameField.getText().trim();
 			if(newName.equals(""))
@@ -179,7 +177,7 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			}
 			categoryNameField.setText("");
 		}
-		if(event.getActionCommand().equals("ItemAdd"))
+		else if(event.getActionCommand().equals("ItemAdd") && catIndex > -1)
 		{
 			String newName = itemNameField.getText().trim();
 			String newPrice = itemPriceField.getText().trim();
@@ -188,9 +186,58 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 				JOptionPane.showMessageDialog(null,"ERROR: Item Limit Reached");
 			else if(newName.equals("") || newPrice.equals(""))
 				JOptionPane.showMessageDialog(null,"ERROR: Invalid Input");
-			else if()
+			else if(!Tools.isMoney(newPrice))
+				JOptionPane.showMessageDialog(null,"ERROR: Invalid Price");
+			else
+			{
+				item[catIndex][activeItems].addItem(String.valueOf(Tools.toAmount(newPrice)), newName);
+				itemModel.addElement(Tools.toMoney(item[catIndex][activeItems].getPrice()) + "     "
+				                                  + item[catIndex][activeItems].getName());
+				itemNameField.setText("");
+				itemPriceField.setText("");
+				resetItemList(catIndex);
+			}
+		}
+		else if(event.getActionCommand().equals("ItemDelete") && catIndex > -1 && itemIndex > -1)
+		{
+			for(int count=itemIndex; count+1 < activeItems; count++)
+				item[catIndex][count].addItem(item[catIndex][count+1].getPrice(),
+									          item[catIndex][count+1].getName());
+			item[catIndex][activeItems-1].deleteItem();
+			resetItemList(catIndex);
+		}
+		else if(event.getActionCommand().equals("ItemEdit") && catIndex > -1 && itemIndex > -1)
+		{
+			String newName = itemNameField.getText().trim();
+			String newPrice = itemPriceField.getText().trim();
+			
+			if(newName.equals("") && newPrice.equals(""))
+				JOptionPane.showMessageDialog(null,"ERROR: Invalid Input");
+			else if(newName.equals(""))
+			{
+				if(!Tools.isMoney(newPrice))
+					JOptionPane.showMessageDialog(null,"ERROR: Invalid Price");
+				else 
+					item[catIndex][itemIndex].setPrice(String.valueOf(Tools.toAmount(newPrice)));
+			}
+			else if(newPrice.equals(""))
+				item[catIndex][itemIndex].setName(newName);
+			else
+			{
+				if(!Tools.isMoney(newPrice))
+					JOptionPane.showMessageDialog(null,"ERROR: Invalid Price");
+				else 
+				{
+					item[catIndex][itemIndex].setPrice(String.valueOf(Tools.toAmount(newPrice)));
+					item[catIndex][itemIndex].setName(newName);
+				}
+			}
+			itemNameField.setText("");
+			itemPriceField.setText("");
+			resetItemList(catIndex);
 		}
 		Tools.update(this);
+		saveArrays();
 	}
 	private void resetLists()
 	{
@@ -199,6 +246,14 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		for(int count=0; category[count].isActive() && count<32; count++)
 			categoryModel.addElement(category[count].getCategoryName());
 		categoryLabel.setText("Select a Category (" + categoryModel.getSize() + "/32)");
+	}
+	private void resetItemList(int catIndex)
+	{
+		itemModel.removeAllElements();
+		for(int count=0; item[catIndex][count].isActive() && count < 32; count++)
+			itemModel.addElement(Tools.toMoney(item[catIndex][count].getPrice()) + "     "
+					 						 + item[catIndex][count].getName());
+		itemLabel.setText("Select an Item (" + itemModel.getSize() +"/32)");
 	}
 	private void readArrays()
 	{

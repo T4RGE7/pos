@@ -51,4 +51,25 @@ public class Tools
 		
 		return Integer.parseInt(price);
 	}
+	public static boolean isMoney(String amount)
+	{
+		if(amount.charAt(0) == '$' && amount.length() > 1)
+			amount = amount.substring(1);
+		
+		return amount.indexOf(".") > -1  &&
+			   amount.indexOf(".") < amount.length()-1  &&
+			   amount.substring(amount.indexOf(".")).length() < 4  &&
+			   isNonNegativeNumber(amount);
+	}
+	public static boolean isNonNegativeNumber(String value)
+	{
+		try
+		{
+			return Double.parseDouble(value) >= 0;
+		}
+		catch(NumberFormatException e)
+		{
+			return false;
+		}
+	}
 }
