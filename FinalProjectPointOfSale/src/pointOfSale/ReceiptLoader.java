@@ -8,6 +8,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class ReceiptLoader extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy the compiler

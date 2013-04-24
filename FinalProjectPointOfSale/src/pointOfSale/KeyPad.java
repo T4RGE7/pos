@@ -7,6 +7,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: A component of the LogInGUI class.  Allows the user to enter a password up to 6 characters long
+ * while masking the password entered.  Evaluates the password and if it is valid, transfers the user to the
+ * transaction screen.  If the password is valid, evaluates whether it is an administrator password and, if it is,
+ * passes a boolean value to the TransactionGUI class which allows access to administrator privileges.  If the
+ * password is not valid, the user is informed through a JOptionPane.
+ *
+ */
 public class KeyPad extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;

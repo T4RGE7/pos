@@ -4,6 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class ItemPanel extends JPanel implements ActionListener, MouseListener
 {
 	private static final long serialVersionUID = 1L;

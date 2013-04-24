@@ -3,6 +3,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class TextFieldEraser implements MouseListener
 {
 	private boolean fieldClicked = false;

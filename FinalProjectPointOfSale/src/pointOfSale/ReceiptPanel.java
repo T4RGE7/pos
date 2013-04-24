@@ -10,6 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class ReceiptPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;

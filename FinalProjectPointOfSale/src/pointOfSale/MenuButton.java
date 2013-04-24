@@ -4,6 +4,13 @@ import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class MenuButton extends JButton
 {
 	private static final long serialVersionUID = 1L;

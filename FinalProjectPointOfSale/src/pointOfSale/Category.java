@@ -1,5 +1,12 @@
 package pointOfSale;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class Category implements java.io.Serializable
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler

@@ -4,6 +4,13 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.GridLayout;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class AdministratorGUI extends JPanel
 {
 	private static final long serialVersionUID = 1L; //Added to satisfy compiler

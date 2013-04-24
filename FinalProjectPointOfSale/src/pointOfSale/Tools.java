@@ -1,8 +1,14 @@
 package pointOfSale;
-
 import javax.swing.JLabel;
 import java.awt.Container;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class Tools 
 {
 	private static int index;

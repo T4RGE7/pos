@@ -7,6 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 
+/**
+ * 
+ * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
+ * (Date: 4/24/2013) 
+ * Purpose: 
+ *
+ */
 public class AdminButtonPanel extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler
