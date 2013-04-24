@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class PinEditor extends JPanel implements ActionListener, MouseListener
+public class PinEditor extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;  //Added to satisfy compiler
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
@@ -24,7 +24,6 @@ public class PinEditor extends JPanel implements ActionListener, MouseListener
 	private JComboBox<String> accessBox = new JComboBox<String>(accessOption);
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private JList<String> userList = new JList<String>(listModel);
-	private String name;
 	private int administrators=0;
 	
 	PinEditor()
@@ -47,7 +46,7 @@ public class PinEditor extends JPanel implements ActionListener, MouseListener
 		
 		addPanel.add(new MenuButton("Add","Add",this));
 		addPanel.add(userField);
-		userField.addMouseListener(this);
+		userField.addMouseListener(new TextFieldEraser());
 		
 		deletePanel.setBackground(DARK_CHAMPAGNE);
 		deletePanel.add(new MenuButton("Delete","Delete",this));
@@ -70,11 +69,9 @@ public class PinEditor extends JPanel implements ActionListener, MouseListener
 	{
 		if(event.getActionCommand().equals("Add"))
 		{
-			name = userField.getText().trim();
-			if(name.equals("Enter User Name"))
-				name = "";
+			String name = userField.getText().trim();
 			
-			if (name.equals(""))
+			if (name.equals("") || name.equals("Enter User Name"))
 				JOptionPane.showMessageDialog(null, "Invalid User Name");
 			else
 			{
@@ -102,26 +99,6 @@ public class PinEditor extends JPanel implements ActionListener, MouseListener
 			}
 		}
 			
-	}
-	public void mousePressed(MouseEvent event)
-	{
-		name = userField.getText().trim();
-		if(event.getComponent().equals(userField))
-			userField.setText("");
-		if(!name.equals("Enter User Name"))
-			userField.setText(name);
-	}
-	public void mouseClicked(MouseEvent event)
-	{
-	}
-	public void mouseReleased(MouseEvent event)
-	{
-	}
-	public void mouseEntered(MouseEvent event)
-	{
-	}
-	public void mouseExited(MouseEvent event)
-	{
 	}
 	private String randomKeyGenerator()
 	{
