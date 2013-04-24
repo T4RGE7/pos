@@ -115,7 +115,7 @@ public class KeyPad extends JPanel implements ActionListener
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null,"ERROR: Invald Security Code");
+			JOptionPane.showMessageDialog(null,"ERROR: Invalid Security Code");
 			numberCode = "";
 			numberField.setText("");
 		}
