@@ -11,7 +11,11 @@ import java.util.Scanner;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: Provides a user with administrator privileges a method to edit password information.  All
+ * password information is saved in a text file, which is modified by this class.  The user may add new
+ * passwords, specifying admin or server access levels or delete existing passwords.  The user is prevented
+ * from deleting the final admin password, as this would lock the user out of the admin screen.  
+ * This class is a component of the AdminGUI class.
  *
  */
 public class PinEditor extends JPanel implements ActionListener
@@ -33,6 +37,10 @@ public class PinEditor extends JPanel implements ActionListener
 	private JList<String> userList = new JList<String>(listModel);
 	private int administrators=0;
 	
+	/**
+	 * Arranges all components used by this class onto a JPanel.  Calls a method to read the password text
+	 * file and display this information in a JList
+	 */
 	PinEditor()
 	{
 		setLayout(new GridLayout(2,1));
@@ -71,7 +79,9 @@ public class PinEditor extends JPanel implements ActionListener
 		add(new JScrollPane(userList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 	}
-	
+	/**
+	 * Responds to user inputs by adding or deleting passwords
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if(event.getActionCommand().equals("Add"))
@@ -107,6 +117,10 @@ public class PinEditor extends JPanel implements ActionListener
 		}
 			
 	}
+	/**
+	 * Private helper method used to generate a String representing a random 6 digit number
+	 * @return The randomized String
+	 */
 	private String randomKeyGenerator()
 	{
 		String key = String.valueOf(Math.round(Math.random() * 1000000));
@@ -114,6 +128,11 @@ public class PinEditor extends JPanel implements ActionListener
 			key = "0" + key;
 		return key;
 	}
+	/**
+	 * Private helper method used to check whether a password is unique by comparing to other saved passwords
+	 * @param key The password to be evaluated
+	 * @return True of the password is unique, false otherwise
+	 */
 	private boolean isDuplicateKey(String key)
 	{
 		int index = -1;
@@ -121,6 +140,9 @@ public class PinEditor extends JPanel implements ActionListener
 			listModel.getElementAt(count).indexOf(key);
 		return index > -1;
 	}
+	/**
+	 * Private helper method which reads the password text file into the program and adds it to a JList
+	 */
 	private void readSecurityFile()
 	{
 		Scanner inputStream = null;
@@ -148,7 +170,10 @@ public class PinEditor extends JPanel implements ActionListener
 		}
 		inputStream.close();
 	}
-	
+	/**
+	 * Private helper method which saves any changes to the password information to a text file, overwriting
+	 * any previously saved information
+	 */
 	private void saveSecurityFile()
 	{
 		PrintWriter outputStream = null;

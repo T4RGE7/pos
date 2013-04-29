@@ -10,7 +10,9 @@ import java.awt.event.*;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: Allows a user with admin privileges to edit the restaurant menu by adding/changing/deleting categories
+ * or adding/changing/deleting items with a limit of 32 categories and 32 items per category.  This data is
+ * serialized and saved to the system.  This class is a component of the AdminGUI class.  
  *
  */
 public class MenuEditor extends JPanel implements ActionListener, ListSelectionListener
@@ -47,6 +49,11 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 	private int activeCats;
 	private int activeItems;
 	
+	/**
+	 * Arranges all components onto a JPanel.  Categories are added to a JList in the upper half of the panel,
+	 * while items are displayed in a JList on the lower half of the panel.  The item JList is refreshed whenever
+	 * the user selects a new category to display the items in that category.  
+	 */
 	MenuEditor()
 	{
 		setBackground(DARK_CHAMPAGNE);
@@ -126,6 +133,10 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		add(categoryPanel);
 		add(itemPanel);
 	}
+	/**
+	 * Listener associated with the category JList which refreshes the item JList to represent the food items
+	 * associated with the newly selected category.
+	 */
 	public void valueChanged(ListSelectionEvent event)
 	{
 		try
@@ -144,6 +155,11 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			itemLabel.setText("Select an Item (" + 0 +"/32)");
 		}
 	}
+	/**
+	 * Responds to user selections by add/changing/deleting categories and items.  Contains error checking
+	 * to ensure that the user enters a valid price amount for the item price, and does not enter a blank space
+	 * for item or category names.
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		catIndex = categoryList.getSelectedIndex();
@@ -267,6 +283,10 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		Tools.update(this);
 		saveArrays();
 	}
+	/**
+	 * Resets both lists to represent modified item and category information.  Called after any user changes are
+	 * made.
+	 */
 	private void resetLists()
 	{
 		categoryModel.removeAllElements();
@@ -275,6 +295,10 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			categoryModel.addElement(category[count].getCategoryName());
 		categoryLabel.setText("Select a Category (" + categoryModel.getSize() + "/32)");
 	}
+	/**
+	 * Resets only the item list to represent newly modified item information
+	 * @param catIndex item category which needs to refreshed
+	 */
 	private void resetItemList(int catIndex)
 	{
 		itemModel.removeAllElements();
@@ -283,6 +307,10 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 					 						 + item[catIndex][count].getName());
 		itemLabel.setText("Select an Item (" + itemModel.getSize() +"/32)");
 	}
+	/**
+	 * Reads the saved item and category information into the program from the system.  Item and category
+	 * information is saved in serialized arrays.
+	 */
 	private void readArrays()
 	{
 		ObjectInputStream readCategories = null;
@@ -308,6 +336,9 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 			JOptionPane.showMessageDialog(null,"ERROR: Local Array Class Not Found");
 		}
 	}
+	/**
+	 * Saves modified item and category data to the system in the form of serialized arrays.
+	 */
 	private void saveArrays()
 	{
 		ObjectOutputStream saveCategories = null;

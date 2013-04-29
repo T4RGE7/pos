@@ -12,7 +12,9 @@ import java.util.Scanner;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: Reads text files generated from the transaction screen which contain saved transactions (receipts).
+ * These saved receipts are displayed on the ReceiptPanel object which is a component of the AdminGUI class.
+ * This class is a component of the AdminGUI class.
  *
  */
 public class ReceiptLoader extends JPanel implements ActionListener
@@ -29,6 +31,10 @@ public class ReceiptLoader extends JPanel implements ActionListener
 	private JLabel titleLabel = new JLabel("Load Saved Receipts", SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below", SwingConstants.LEFT);
 	
+	/**
+	 * Arranges all components in this class onto a JPanel and reads all saved receipt text files, displaying
+	 * the text files names in a JList
+	 */
 	ReceiptLoader()
 	{
 		setLayout(new GridLayout(2,1));
@@ -57,7 +63,9 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		add(new JScrollPane(receiptList, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 	}
-	
+	/**
+	 * Responds to user input by loading or deleting saved receipt text files
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if(event.getActionCommand().equals("Load") && receiptList.getSelectedIndex() > -1)
@@ -67,7 +75,9 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		if(event.getActionCommand().equals("Delete All"))
 			deleteAll();
 	}
-	
+	/**
+	 * Private helper method which is called to read the text files stored in the system
+	 */
 	private void readReceipts()
 	{
 		Scanner inputStream = null;
@@ -89,6 +99,10 @@ public class ReceiptLoader extends JPanel implements ActionListener
 				listModel.addElement(line);
 		}
 	}
+	/**
+	 * Private helper method which deletes a receipt, removing it from the JList and saving the change to the
+	 * system.
+	 */
 	private void deleteReceipt()
 	{
 		File file = new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue());
@@ -99,6 +113,9 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		saveReceiptList();
 		ReceiptPanel.clearReceipt();
 	}
+	/**
+	 * Private helper method which removes all receipt files from the JList and from the System
+	 */
 	private void deleteAll()
 	{
 		File receiptDirectory = new File(RECEIPT_PATH);
@@ -110,6 +127,9 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		saveReceiptList();
 		ReceiptPanel.clearReceipt();
 	}
+	/**
+	 * Method called to save any changes made to the receipt text file data
+	 */
 	private void saveReceiptList()
 	{
 		PrintWriter listWriter = null;
