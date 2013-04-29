@@ -32,6 +32,9 @@ public class KeyPad extends JPanel implements ActionListener
 	private boolean validCode = false;
 	private boolean adminPrivilege = false;
 	
+	/**
+	 * Constructs a panel containing a grid of buttons used to enter a password
+	 */
 	KeyPad()
 	{
 		setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
@@ -63,7 +66,10 @@ public class KeyPad extends JPanel implements ActionListener
 		add(buttonRow2);
 		add(buttonRow3);
 	}
-	
+	/**
+	 * Action listener assigned to the keypad.  Creates a password reflecting the user's entries, clears
+	 * the password or calls checkCode() to evaluate the password.
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if(Integer.parseInt(event.getActionCommand()) < 10)
@@ -82,7 +88,11 @@ public class KeyPad extends JPanel implements ActionListener
 		else if (event.getActionCommand().equals("11"))
 			checkCode();
 	}
-	
+	/**
+	 * Private helper method used to check the user entered password against a text file list of
+	 * valid passwords.  If the password checks out, the user is transfered to the transaction screen
+	 * along with the appropriate access privilege (server or admin)
+	 */
 	private void checkCode()
 	{
 		Scanner inputStream = null;

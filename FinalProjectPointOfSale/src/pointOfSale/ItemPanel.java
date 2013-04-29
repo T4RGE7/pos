@@ -8,7 +8,10 @@ import java.io.*;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: A grid of MenuButtons which represent either the restaurants food categories or the items in any
+ * particular category.  These buttons are used to interact with the Item and Category arrays which contain
+ * the restaurant's menu data.  Those arrays are read from a serialized binary file save in the system.
+ * This class is a component of the TransactionGUI class.
  *
  */
 public class ItemPanel extends JPanel implements ActionListener, MouseListener
@@ -21,7 +24,11 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 	private MenuButton[] button = new MenuButton[32];
 	private Category[] category = new Category[32];
 	private Item[][] item = new Item[32][32];
-
+	
+	/**
+	 * Initializes the screen with an array of 32 MenuButton objects, organized into 8 rows and
+	 * 4 columns.  Defaults the objects to represent categories initially.
+	 */
 	ItemPanel()
 	{
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
@@ -34,7 +41,11 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 		initializeButtons();
 		displayCategories();
 	}
-	
+	/**
+	 * MenuButton ActionListener. If a button is clicked when categories are being displayed, changes the
+	 * buttons to display all items in that category.  If an item button is clicked, that item's date is added
+	 * to the receipt panel.
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		int index = event.getActionCommand().indexOf(".");
@@ -48,6 +59,11 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			ReceiptPanel.addItem(item[catNumber][itemNumber].getPrice(), item[catNumber][itemNumber].getName());
 		}
 	}
+	/**
+	 * This MouseListener is assigned to the ItemPanel as a whole and to each button.  If the user clicks the
+	 * right mouse button, then the buttons change to display categories, allowing the user to quickly
+	 * browse the restaurant menu.
+	 */
 	public void mousePressed(MouseEvent event)
 	{
 		if(event.getButton() == MouseEvent.BUTTON3)
@@ -65,6 +81,9 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 	public void mouseExited(MouseEvent event)
 	{
 	}
+	/**
+	 * Changes the buttons to display food categories.  Called by this class and the TransactionGUI class.
+	 */
 	public void displayCategories()
 	{
 		int count = 0;
@@ -79,7 +98,11 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 		
 		Tools.update(this);
 	}
-	
+	/**
+	 * Private helper method which changes the buttons to display individual menu items associated with the
+	 * same category
+	 * @param category Category selected by the user
+	 */
 	private void displayItems(int category)
 	{
 		int count = 0;
@@ -94,7 +117,9 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			
 		Tools.update(this);
 	}
-	
+	/**
+	 * Private helper method which initializes the MenuButton array, and adds a MouseListener to each button
+	 */
 	private void initializeButtons()
 	{
 		for(int count=0; count<32; count++)
@@ -105,7 +130,10 @@ public class ItemPanel extends JPanel implements ActionListener, MouseListener
 			add(button[count]);
 		}
 	}
-	
+	/**
+	 * Private helper method which reads the Item and Category arrays from the system in their respective binary
+	 * files.
+	 */
 	private void initializeArrays()
 	{
 		ObjectInputStream readCategories = null;
