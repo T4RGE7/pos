@@ -156,7 +156,7 @@ public class PinEditor extends JPanel implements ActionListener
 		}
 		catch(FileNotFoundException e)
 		{
-			System.out.println("File not found");
+			JOptionPane.showMessageDialog(null,"ERROR: Security File not found");
 		}
 		while(inputStream.hasNextLine())
 		{
