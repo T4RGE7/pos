@@ -131,7 +131,8 @@ public class PinEditor extends JPanel implements ActionListener
 		return key;
 	}
 	/**
-	 * Private helper method used to check whether a password is unique by comparing to other saved passwords
+	 * Private helper method used to check whether a password is unique by comparing to
+	 * the current passwords
 	 * @param key The password to be evaluated
 	 * @return True of the password is unique, false otherwise
 	 */
