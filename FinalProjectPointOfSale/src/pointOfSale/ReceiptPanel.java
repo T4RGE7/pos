@@ -23,9 +23,9 @@ public class ReceiptPanel extends JPanel
 	private static final long serialVersionUID = 1L;
 	private static final String RECEIPT_PATH = "Files/Receipts/";
 	private static final String RECEIPT_LIST_FILE = RECEIPT_PATH + "ReceiptList";
+	private static final String TAX_FILE = "Files/Tax/SalesTax";
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private static final  Color PALE_GOLDENROD = new Color(238,232,170);
-	private static final int SALES_TAX = 5;
 	
 	private static DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private static JList<String> receiptList = new JList<String>(listModel);
@@ -33,6 +33,7 @@ public class ReceiptPanel extends JPanel
 	private static long taxAmount = 0;
 	private static long totalAmount = 0;
 	private static String newReceipt = "";
+	private static double salesTax=0;
 	
 	/**
 	 * Constructs the ReceiptPanel.  Sets the initial conditions of the panel and the receiptList JList object.
@@ -43,6 +44,8 @@ public class ReceiptPanel extends JPanel
 		setBorder(BorderFactory.createMatteBorder(10,10,10,10,DARK_CHAMPAGNE));
 		setLayout(new GridLayout(1,1));
 		setBackground(DARK_CHAMPAGNE);
+		
+		readTax();
 		
 		receiptList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		receiptList.setBackground(PALE_GOLDENROD);
@@ -160,7 +163,7 @@ public class ReceiptPanel extends JPanel
 	 */
 	private static void updateTotals()
 	{
-		taxAmount = Math.round(subtotalAmount * SALES_TAX / 100.0);
+		taxAmount = Math.round(subtotalAmount * salesTax / 100.0);
 		totalAmount = subtotalAmount + taxAmount;
 	}
 	/**
@@ -185,5 +188,24 @@ public class ReceiptPanel extends JPanel
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
 		Date date = new Date();
 		return dateFormat.format(date);
+	}
+	/**
+	 * Private helper method which reads the local sales tax amount 
+	 * from a text file and sets a double value equal to it.
+	 */
+	private static void readTax()
+	{
+
+		Scanner inputStream = null;
+		try
+		{
+			inputStream = new Scanner(new File(TAX_FILE));
+		}
+		catch(FileNotFoundException e)
+		{
+			JOptionPane.showMessageDialog(null,"File Not Found");
+		}
+		while(inputStream.hasNext())
+			salesTax = Double.parseDouble(inputStream.next());
 	}
 }

@@ -39,7 +39,7 @@ public class AdministratorGUI extends JPanel
 		quarterPanel1.add(new PinEditor());
 		
 		quarterPanel2.setBackground(DARK_CHAMPAGNE);
-		Tools.addBlankSpace(quarterPanel2,1);
+		quarterPanel2.add(new TaxPanel());
 		quarterPanel2.add(new AdminButtonPanel());
 		
 		add(new ReceiptPanel());
