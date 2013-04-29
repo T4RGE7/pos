@@ -14,7 +14,8 @@ import java.util.Scanner;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: Creates a panel which processes, saves and loads the receipts 
+ * created through TransactionGUI. 
  *
  */
 public class ReceiptPanel extends JPanel
@@ -108,6 +109,9 @@ public class ReceiptPanel extends JPanel
 		taxAmount = 0;
 		totalAmount = 0;
 	}
+	/**
+	 * Saves the receiptList to text file before clearing it
+	 */
 	public static void saveReceipt()
 	{
 		PrintWriter listWriter = null;
@@ -132,6 +136,10 @@ public class ReceiptPanel extends JPanel
 		contentWriter.close();
 		clearReceipt();
 	}
+	/**
+	 * Loads items of the selected receipt from text file back into receipt list
+	 * @param receiptFile Text file to be loaded
+	 */
 	public static void loadReceipt(String receiptFile)
 	{
 		Scanner inputStream = null;
@@ -147,6 +155,9 @@ public class ReceiptPanel extends JPanel
 		while(inputStream.hasNextLine())
 			listModel.addElement(inputStream.nextLine());
 	}
+	/**
+	 * Updates the total price to include sales tax
+	 */
 	private static void updateTotals()
 	{
 		taxAmount = Math.round(subtotalAmount * SALES_TAX / 100.0);
@@ -165,6 +176,10 @@ public class ReceiptPanel extends JPanel
 			tab += " ";
 		return tab;
 	}
+	/**
+	 * Method to retrieve the date and time of checkout for each receipt
+	 * @return returns the current time in String format
+	 */
 	private static String getTimeStamp()
 	{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");

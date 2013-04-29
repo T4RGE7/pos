@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: To load the GUI for processing and saving transactions. Upon successful login, 
+ * the user is able to select items from each category into a receipt panel and save the receipt
+ * by pressing the "Checkout" button. Administrators are given supplemented privileges to access and change
+ * system info through a "System" button. 
  *
  */
 public class TransactionGUI extends JPanel implements ActionListener
@@ -35,7 +38,11 @@ public class TransactionGUI extends JPanel implements ActionListener
 	private Border margin = BorderFactory.createMatteBorder(25,25,25,25,DARK_CHAMPAGNE);
 	private Border edge = BorderFactory.createBevelBorder(BevelBorder.LOWERED,
 										DARK_CHAMPAGNE,DARK_CHAMPAGNE);
-	
+	/**
+	 * Main constructor which positions components for completing transactions in grid layout.
+	 * Allows admin "System" button and label visibility dependent on the 
+	 * determined user privilege status
+	 */
 	TransactionGUI()
 	{
 		setLayout(new GridLayout(1,2));
@@ -90,6 +97,9 @@ public class TransactionGUI extends JPanel implements ActionListener
 		add(menuPanel);
 		
 	}
+	/**
+	 * ActionListener for the transaction screens system oriented or receipt panel oriented buttons.
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if(event.getActionCommand().equals("Log Off"))
@@ -105,7 +115,10 @@ public class TransactionGUI extends JPanel implements ActionListener
 		else if(event.getActionCommand().equals("Categories"))
 			menuPanel.displayCategories();
 	}
-	
+	/**
+	 * Setter for the adminPrivilege variable 
+	 * @param newAdminPrivilege desired new boolean value for adminPrivelege
+	 */
 	public static void setAdminPrivilege(boolean newAdminPrivilege)
 	{
 		adminPrivilege = newAdminPrivilege;
