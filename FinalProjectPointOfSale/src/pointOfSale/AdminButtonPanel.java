@@ -11,7 +11,8 @@ import javax.swing.BorderFactory;
  * 
  * @author Stephen Collins, Vanessa Harris, Kolter Bradshaw, Cristhian Ramirez
  * (Date: 4/24/2013) 
- * Purpose: 
+ * Purpose: JPanel containing only the "Back" button in the administrator screen used to return to the
+ * transaction screen.
  *
  */
 public class AdminButtonPanel extends JPanel implements ActionListener
@@ -20,6 +21,9 @@ public class AdminButtonPanel extends JPanel implements ActionListener
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	private MenuButton exitButton = new MenuButton("Back","Back",this);
 	
+	/**
+	 * Arranges the "Back" button on its own JPanel
+	 */
 	AdminButtonPanel()
 	{
 		setLayout(new GridLayout(4,2));
@@ -30,7 +34,9 @@ public class AdminButtonPanel extends JPanel implements ActionListener
 		add(exitButton);
 		exitButton.setFont(new Font(Font.SERIF,Font.PLAIN,36));
 	}
-	
+	/**
+	 * Listens for the "Back" button to be clicked and returns the user to the transaction screen if it is
+	 */
 	public void actionPerformed(ActionEvent event)
 	{
 		if(event.getActionCommand().equals("Back"))
