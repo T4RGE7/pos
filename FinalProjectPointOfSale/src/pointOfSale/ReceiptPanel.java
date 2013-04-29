@@ -205,7 +205,8 @@ public class ReceiptPanel extends JPanel
 		{
 			JOptionPane.showMessageDialog(null,"File Not Found");
 		}
-		while(inputStream.hasNext())
-			salesTax = Double.parseDouble(inputStream.next());
+		
+		salesTax = Double.parseDouble(inputStream.next());
+		inputStream.close();
 	}
 }

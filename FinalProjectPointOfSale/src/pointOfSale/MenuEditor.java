@@ -77,13 +77,13 @@ public class MenuEditor extends JPanel implements ActionListener, ListSelectionL
 		itemLabel.setFont(new Font(Font.SERIF,Font.ITALIC,18));
 		
 		categoryNameField.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createEtchedBorder()));
+				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createLoweredBevelBorder()));
 		categoryNameField.addMouseListener(new TextFieldEraser());
 		itemNameField.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createEtchedBorder()));
+				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createLoweredBevelBorder()));
 		itemNameField.addMouseListener(new TextFieldEraser());
 		itemPriceField.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createEtchedBorder()));
+				BorderFactory.createMatteBorder(10,0,10,0,DARK_CHAMPAGNE),BorderFactory.createLoweredBevelBorder()));
 		itemPriceField.addMouseListener(new TextFieldEraser());
 		
 		categoryHeader.setBackground(DARK_CHAMPAGNE);

@@ -1,5 +1,6 @@
 package pointOfSale;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -59,9 +60,10 @@ public class PinEditor extends JPanel implements ActionListener
 		readSecurityFile();
 		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
+		userField.addMouseListener(new TextFieldEraser());
+		userField.setBorder(BorderFactory.createLoweredBevelBorder());
 		addPanel.add(new MenuButton("Add","Add",this));
 		addPanel.add(userField);
-		userField.addMouseListener(new TextFieldEraser());
 		
 		deletePanel.setBackground(DARK_CHAMPAGNE);
 		deletePanel.add(new MenuButton("Delete","Delete",this));
