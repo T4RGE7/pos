@@ -98,6 +98,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 			else
 				listModel.addElement(line);
 		}
+		inputStream.close();
 	}
 	/**
 	 * Private helper method which deletes a receipt, removing it from the JList and saving the change to the

@@ -157,6 +157,7 @@ public class ReceiptPanel extends JPanel
 		clearReceipt();
 		while(inputStream.hasNextLine())
 			listModel.addElement(inputStream.nextLine());
+		inputStream.close();
 	}
 	/**
 	 * Updates the total price to include sales tax
