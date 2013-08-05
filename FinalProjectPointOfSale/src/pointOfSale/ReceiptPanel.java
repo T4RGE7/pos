@@ -131,6 +131,7 @@ public class ReceiptPanel extends JPanel
 			JOptionPane.showMessageDialog(null,"File Not Found");
 		}
 		
+		contentWriter.println("OPEN");
 		listWriter.println(newReceipt);
 		for(int count=0; count < listModel.getSize(); count++)
 			contentWriter.println(listModel.elementAt(count));

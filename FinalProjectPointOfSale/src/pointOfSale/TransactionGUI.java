@@ -118,6 +118,8 @@ public class TransactionGUI extends JPanel implements ActionListener
 			SystemInit.setAdminScreen();
 		else if(event.getActionCommand().equals("Categories"))
 			menuPanel.displayCategories();
+		else if(event.getActionCommand().equals("Process"))
+			SystemInit.setProcessScreen();
 	}
 	/**
 	 * Setter for the adminPrivilege variable 
