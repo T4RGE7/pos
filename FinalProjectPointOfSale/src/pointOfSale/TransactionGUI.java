@@ -31,6 +31,7 @@ public class TransactionGUI extends JPanel implements ActionListener
 	private ItemPanel menuPanel = new ItemPanel();
 	private JPanel checkoutButtonPanel = new JPanel(new GridLayout(3,1));
 	private MenuButton systemButton = new MenuButton("System","System",this);
+	private MenuButton processButton = new MenuButton("Process", "Process", this);
 	private MenuButton checkoutButton = new MenuButton("Checkout","Checkout",this);
 	private JLabel adminLabel = new JLabel("Admin: ", SwingConstants.RIGHT);
 	private ImageIcon logo = new ImageIcon("Files/Icons/logoSmall.jpg");
@@ -58,11 +59,14 @@ public class TransactionGUI extends JPanel implements ActionListener
 		receiptButtonPanel.setBackground(DARK_CHAMPAGNE);
 		receiptButtonPanel.add(new MenuButton("Delete Line","Delete Line",this));
 		receiptButtonPanel.add(new MenuButton("Delete All","Delete All",this));
-		receiptButtonPanel.add(new MenuButton("Log Off","Log Off",this));;
-		receiptButtonPanel.add(adminLabel);
+		receiptButtonPanel.add(new MenuButton("Log Off","Log Off",this));;	
+		
+		receiptButtonPanel.add(processButton);
 		receiptButtonPanel.add(systemButton);
 		receiptButtonPanel.add(new MenuButton("Categories","Categories",this));
-		Tools.addBlankSpace(receiptButtonPanel,6);
+		receiptButtonPanel.add(adminLabel);
+		//originally 6
+		Tools.addBlankSpace(receiptButtonPanel,5);
 		
 		logoPanel.setBackground(DARK_GREEN);
 		logoLabel.setVerticalAlignment(SwingConstants.CENTER);
