@@ -32,7 +32,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 	private JPanel buttonPanel = new JPanel(new GridLayout(3, 2));
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private JList<String> receiptList = new JList<String>(listModel);
-	private JLabel titleLabel = new JLabel("Load Saved Receipts",
+	private JLabel titleLabel = new JLabel("Process Receipt",
 			SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below",
 			SwingConstants.LEFT);
@@ -104,7 +104,10 @@ public class ProcessPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 
 		if (event.getActionCommand().equals("Load") && receiptList.getSelectedIndex() > -1)
+		{
 			ReceiptPanel.loadReceipt(receiptList.getSelectedValue());
+			CardPanel.loadReciept(new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue()));
+		}
 		if (event.getActionCommand().equals("Delete") && receiptList.getSelectedIndex() > -1)
 			deleteReceipt();
 		if (event.getActionCommand().equals("Cash") && receiptList.getSelectedIndex() > -1)

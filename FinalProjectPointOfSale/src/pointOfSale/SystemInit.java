@@ -97,11 +97,11 @@ public class SystemInit extends JFrame
 		
 	}
 	
-	public static void setCardScreen()
-	{
-		
-		systemPanel.removeAll();
-		systemPanel.add(cardGUI);
-		
-	}
+//	public static void setCardScreen()
+//	{
+//		
+//		systemPanel.removeAll();
+//	//	systemPanel.add(cardGUI);
+//		
+//	}
 }
