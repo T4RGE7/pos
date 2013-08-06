@@ -15,7 +15,7 @@ public class ProcessGUI extends JPanel
 	
 	public ProcessGUI()
 	{
-		setLayout(new GridLayout(1,2));
+		setLayout(new GridLayout(2,2));
 		setBackground(DARK_CHAMPAGNE);
 		setBorder(BorderFactory.createLoweredBevelBorder());
 		

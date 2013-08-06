@@ -88,8 +88,20 @@ public class SystemInit extends JFrame
 	 */
 	public static void setProcessScreen()
 	{
+//		SwipeListening listener = new SwipeListening();
+//		Thread t = new Thread(listener);
+		ProcessGUI temp = new ProcessGUI();
 		systemPanel.removeAll();
-		systemPanel.add(new ProcessGUI());
+		systemPanel.add(temp);
 		Tools.update(systemPanel);
+		
+	}
+	
+	public static void setCardScreen()
+	{
+		
+		systemPanel.removeAll();
+		systemPanel.add(cardGUI);
+		
 	}
 }
