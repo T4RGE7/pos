@@ -76,6 +76,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 	}
 
 	private void readReceipts() {
+		listModel.removeAllElements();
 		Scanner inputStream = null;
 		Scanner reader = null;
 		try {
@@ -98,7 +99,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 			else {
 				String read = reader.nextLine();
 			//	System.out.println(read.matches("OPEN"));
-				if (!read.matches("CASH")) {
+				if (!read.matches("CASH") && !read.matches("SWIPED")) {
 					listModel.addElement(line);
 				}
 			}
@@ -119,7 +120,10 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		if (event.getActionCommand().equals("Delete") && receiptList.getSelectedIndex() > -1)
 			deleteReceipt();
 		if (event.getActionCommand().equals("Cash") && receiptList.getSelectedIndex() > -1)
+		{
 			closeReceipt("CASH");
+			SystemInit.setTransactionScreen();
+		}
 		if (event.getActionCommand().equals("Card") && receiptList.getSelectedIndex() > -1)
 			closeReceipt("CARD");
 		if (event.getActionCommand().equals("Back"))

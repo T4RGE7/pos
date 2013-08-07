@@ -25,7 +25,7 @@ public class CardPanel extends JPanel implements ActionListener {
 	private static JTextField display = new JTextField("", 20);
 	private static JPanel buttonPanel = new JPanel(new GridLayout(4,3));
 	private static JPanel bottomPanel = new JPanel(new GridLayout(1,3));
-	private static MenuButton tipButton = null;
+	private static MenuButton tipButton = null, cardNumButton = null, cardExpButton = null;
 	private static String tabStrings[] = {"","","",""};
 	private static String current = "";
 	private static int selection = 0;
@@ -44,9 +44,11 @@ public class CardPanel extends JPanel implements ActionListener {
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		
 		tipButton = new MenuButton("Tip","13", this);
+		cardNumButton = new MenuButton("Card Number","14", this);
+		cardExpButton = new MenuButton("Exp. Date","15", this);
 		tabPanel.add(tipButton);
-		tabPanel.add(new MenuButton("Card Number","14", this));
-		tabPanel.add(new MenuButton("Exp. Date","15", this));
+		tabPanel.add(cardNumButton);
+		tabPanel.add(cardExpButton);
 	
 		
 		buttonPanel.add(new MenuButton("1", "1", this));
@@ -77,6 +79,7 @@ public class CardPanel extends JPanel implements ActionListener {
 	
 	public static void loadReciept(File receipt)
 	{
+		tabStrings = new String[]{"","","",""};
 		receiptSave = receipt;
 		Scanner reader = null;
 		Scanner regex = null;
@@ -86,6 +89,9 @@ public class CardPanel extends JPanel implements ActionListener {
 			firstLine = read;
 			if(read != null)
 				tipButton.setVisible(read.contains("OPEN") ? false : true);
+			
+			cardNumButton.setVisible(!tipButton.isVisible());
+			cardExpButton.setVisible(!tipButton.isVisible());
 			
 			while(reader.hasNextLine()) {
 				read = reader.nextLine();
@@ -108,9 +114,10 @@ public class CardPanel extends JPanel implements ActionListener {
 		Tools.update(display);
 	}
 	
-	private boolean checkReady()
+	private boolean checkReady(String num, String exp)
 	{
-		if(tabStrings[2].matches("\\d{10,17}") && tabStrings[3].matches("\\d{4}"))
+		System.out.println(num + " and " + exp);
+		if(num.matches("\\d{10,17}") && exp.matches("\\d{4}"))
 		{
 			return true;
 		}
@@ -154,26 +161,38 @@ public class CardPanel extends JPanel implements ActionListener {
 				break;
 			case 16:
 				tabStrings[selection] = current;
-				System.out.println("HERE!");
-				if(checkReady()) {
+//				final String temp2 = tabStrings[2], temp3 = tabStrings[3];
+//				
+//				current = tabStrings[2];
+//				System.out.println("HERE!");
+//				System.out.println(temp2 + " first " + temp3);
+				if(checkReady(tabStrings[2], tabStrings[3])) {
 					//
+					System.out.println(firstLine);
 					if(firstLine.equalsIgnoreCase("OPEN"))
 					{
+						//get response
 						ProcessPanel.closeReceipt("PROGRESS");
 						System.out.println("HERE");
+						tabStrings = new String[]{"","","",""};
+						SystemInit.setTransactionScreen();
 						return;
 					} 
-					else if(firstLine.equalsIgnoreCase("PROGRESS") && tabStrings[1].matches("\\d{0,}\\.?\\d{0,2}"))
-					{
-						updateTip(tabStrings[1]);
-						ProcessPanel.closeReceipt("SWIPED");
-						return;
-					}
+				}
+				if(firstLine.equalsIgnoreCase("PROGRESS") && tabStrings[1].matches("\\d{0,}\\.?\\d{0,2}"))					{
+				{
+					updateTip(tabStrings[1]);
+					ProcessPanel.closeReceipt("SWIPED");
+					tabStrings = new String[]{"","","",""};
+					SystemInit.setTransactionScreen();
+					return;
+				}
 				}
 			break;
 			}
 		}
-		
+		//for keyboard input you will have to parse the text in display when the tabs are changed
+		System.out.println(current);
 		display.setText(tabText[selection] + current);
 		Tools.update(display);
 		
