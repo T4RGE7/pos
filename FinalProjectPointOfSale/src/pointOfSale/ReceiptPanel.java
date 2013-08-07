@@ -31,6 +31,7 @@ public class ReceiptPanel extends JPanel
 	private static JList<String> receiptList = new JList<String>(listModel);
 	private static long subtotalAmount = 0;
 	private static long taxAmount = 0;
+	private static long tipAmount = 0;
 	private static long totalAmount = 0;
 	private static String newReceipt = "";
 	private static double salesTax=0;
@@ -66,12 +67,13 @@ public class ReceiptPanel extends JPanel
 		updateTotals();
 		
 		if(listModel.getSize() > 1)
-			for(int count=0; count < 4; count++)
+			for(int count=0; count < 5; count++)
 				listModel.removeElementAt(listModel.getSize()-1);
 		listModel.addElement(Tools.toMoney(itemPrice) + manualTab(itemPrice) + itemName);
 		listModel.addElement(" ");
 		listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
 		listModel.addElement(Tools.toMoney(taxAmount) + manualTab(Tools.toMoney(taxAmount)) + "Tax");
+		listModel.addElement(Tools.toMoney(tipAmount) + manualTab(Tools.toMoney(tipAmount)) + "Tip");
 		listModel.addElement(Tools.toMoney(totalAmount) + manualTab(Tools.toMoney(totalAmount)) + "Total");
 	}
 	/**
@@ -89,7 +91,7 @@ public class ReceiptPanel extends JPanel
 			updateTotals();
 			
 			listModel.removeElementAt(receiptList.getSelectedIndex());
-			if(listModel.getSize() == 4)
+			if(listModel.getSize() == 5)
 				clearReceipt();
 			else
 			{
@@ -98,6 +100,7 @@ public class ReceiptPanel extends JPanel
 				listModel.addElement(" ");
 				listModel.addElement(Tools.toMoney(subtotalAmount) + manualTab(Tools.toMoney(subtotalAmount)) + "Subtotal");
 				listModel.addElement(Tools.toMoney(taxAmount) + manualTab(Tools.toMoney(taxAmount)) + "Tax");
+				listModel.addElement(Tools.toMoney(tipAmount) + manualTab(Tools.toMoney(tipAmount)) + "Tip");
 				listModel.addElement(Tools.toMoney(totalAmount) + manualTab(Tools.toMoney(totalAmount)) + "Total");
 			}
 		}
@@ -110,6 +113,7 @@ public class ReceiptPanel extends JPanel
 		listModel.removeAllElements();
 		subtotalAmount = 0;
 		taxAmount = 0;
+		tipAmount = 0;
 		totalAmount = 0;
 	}
 	/**

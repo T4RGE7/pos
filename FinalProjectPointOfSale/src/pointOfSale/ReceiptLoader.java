@@ -51,7 +51,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		buttonPanel.setBackground(DARK_CHAMPAGNE);
 		buttonPanel.add(new MenuButton("Load","Load",this));
 		buttonPanel.add(new MenuButton("Delete","Delete",this));
-		Tools.addBlankSpace(buttonPanel, 1);
+		buttonPanel.add(new MenuButton("Void", "Void", this));
 		buttonPanel.add(new MenuButton("Delete All","Delete All",this));
 		
 		upperPanel.setBackground(DARK_CHAMPAGNE);
@@ -74,6 +74,56 @@ public class ReceiptLoader extends JPanel implements ActionListener
 			deleteReceipt();
 		if(event.getActionCommand().equals("Delete All"))
 			deleteAll();
+		if(event.getActionCommand().equals("Void") && receiptList.getSelectedIndex() > -1 && checkValidState(receiptList.getSelectedValue()))
+			setToVoid(receiptList.getSelectedValue());
+	}
+	
+	private void setToVoid(String fileName)
+	{
+		System.out.println("HERE");
+		File toCopy = new File(RECEIPT_PATH + "/" + fileName);
+		String temp = "VOID";
+		Scanner reader = null;
+		PrintWriter copy = null;
+		try {
+			reader = new Scanner(toCopy);
+			reader.nextLine();
+			while(reader.hasNextLine())
+			{
+				temp += "\n" + reader.nextLine();
+			}
+			reader.close();
+			copy = new PrintWriter(toCopy);
+			copy.println(temp);
+			copy.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private boolean checkValidState(String fileName)
+	{
+		File toCheck = new File(RECEIPT_PATH + "/" + fileName);
+		Scanner checker = null;
+		try {
+			checker = new Scanner(toCheck);
+			String line = checker.nextLine();
+			if(line == null)
+			{
+				throw new FileNotFoundException();
+			}
+			if(!line.equalsIgnoreCase("OPEN") && !line.equalsIgnoreCase("CASH"))
+			{
+				return true;
+			}
+			checker.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 	/**
 	 * Private helper method which is called to read the text files stored in the system

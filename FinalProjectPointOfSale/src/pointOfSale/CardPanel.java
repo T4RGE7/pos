@@ -19,10 +19,10 @@ public class CardPanel extends JPanel implements ActionListener {
 	private static final String RECEIPT_PATH = "Files/Receipts";
 	private static final String RECEIPT_LIST = RECEIPT_PATH + "/ReceiptList";
 	
-	private static JPanel tabPanel = new JPanel(new GridLayout(1,4));
+	private static JPanel tabPanel = new JPanel(new GridLayout(1,3));
 	private static JTextField display = new JTextField("", 20);
 	private static JPanel buttonPanel = new JPanel(new GridLayout(4,3));
-	private static JPanel bottomPanel = new JPanel(new GridLayout(3,1));
+	private static JPanel bottomPanel = new JPanel(new GridLayout(1,3));
 	private static String tabStrings[] = {"","","",""};
 	private static String current = "";
 	private static int selection = 0;
@@ -31,10 +31,14 @@ public class CardPanel extends JPanel implements ActionListener {
 	
 	public CardPanel()
 	{
-		setLayout(new GridLayout(3, 1));
+		tabPanel.removeAll();
+		display.removeAll();
+		buttonPanel.removeAll();
+		bottomPanel.removeAll();
+		this.removeAll();
+		setLayout(new GridLayout(4, 1));
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, DARK_CHAMPAGNE));
 		
-		tabPanel.add(new MenuButton("Total","12", this));
 		tabPanel.add(new MenuButton("Tip","13", this));
 		tabPanel.add(new MenuButton("Card Number","14", this));
 		tabPanel.add(new MenuButton("Exp. Date","15", this));
@@ -56,11 +60,13 @@ public class CardPanel extends JPanel implements ActionListener {
 		buttonPanel.add(new MenuButton("0", "0", this));
 		buttonPanel.add(new MenuButton(".", "11", this));
 		
+		Tools.addBlankSpace(bottomPanel, 2);
+		bottomPanel.add(new MenuButton("Done", "16", this));
 		
 		add(tabPanel);
 		add(display);
 		add(buttonPanel);
-		
+		add(bottomPanel);
 		
 	}
 	
@@ -86,9 +92,9 @@ public class CardPanel extends JPanel implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		selection = 0;
-		current = tabStrings[0];
-		display.setText(tabStrings[0]);
+		selection = 1;
+		current = tabStrings[1];
+		display.setText(tabStrings[1]);
 		Tools.update(display);
 	}
 	
@@ -108,10 +114,10 @@ public class CardPanel extends JPanel implements ActionListener {
 					current += ".";
 				}
 				break;
-			case 12: tabStrings[selection] = current;
-				selection = 0;
-				current = tabStrings[selection];
-				break;
+//			case 12: tabStrings[selection] = current;
+//				selection = 0;
+//				current = tabStrings[selection];
+//				break;
 			case 13: tabStrings[selection] = current;
 				selection = 1;
 				current = tabStrings[selection];

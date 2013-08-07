@@ -86,13 +86,12 @@ public class SystemInit extends JFrame
 	 * Static method called by the TransactionGUI class to switch to the processing screen, where
 	 * a user is able to process payments
 	 */
-	public static void setProcessScreen()
+	public static void setProcessScreen(boolean isAdmin)
 	{
 //		SwipeListening listener = new SwipeListening();
 //		Thread t = new Thread(listener);
-		ProcessGUI temp = new ProcessGUI();
 		systemPanel.removeAll();
-		systemPanel.add(temp);
+		systemPanel.add(new ProcessGUI(isAdmin));
 		Tools.update(systemPanel);
 		
 	}

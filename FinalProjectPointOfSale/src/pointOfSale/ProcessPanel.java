@@ -29,15 +29,18 @@ public class ProcessPanel extends JPanel implements ActionListener {
 	private static final String RECEIPT_LIST = RECEIPT_PATH + "/ReceiptList";
 
 	private JPanel upperPanel = new JPanel(new GridLayout(3, 1));
-	private JPanel buttonPanel = new JPanel(new GridLayout(3, 2));
+	private JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private JList<String> receiptList = new JList<String>(listModel);
 	private JLabel titleLabel = new JLabel("Process Receipt",
 			SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below",
 			SwingConstants.LEFT);
+	
+	private boolean isAdmin;
 
-	public ProcessPanel() {
+	public ProcessPanel(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 		setLayout(new GridLayout(2, 1));
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10,
 				DARK_CHAMPAGNE));
@@ -52,8 +55,12 @@ public class ProcessPanel extends JPanel implements ActionListener {
 
 		buttonPanel.setBackground(DARK_CHAMPAGNE);
 		buttonPanel.add(new MenuButton("Load", "Load", this));
-		buttonPanel.add(new MenuButton("Delete", "Delete", this));
-		buttonPanel.add(new MenuButton("Card", "Card", this));
+		if(isAdmin)
+			buttonPanel.add(new MenuButton("Void", "Void", this));
+		else
+			Tools.addBlankSpace(buttonPanel, 1);
+//		buttonPanel.add(new MenuButton("Delete", "Delete", this));
+	//	buttonPanel.add(new MenuButton("Card", "Card", this));
 		buttonPanel.add(new MenuButton("Cash", "Cash", this));
 		buttonPanel.add(new MenuButton("Back", "Back", this));
 
@@ -90,12 +97,13 @@ public class ProcessPanel extends JPanel implements ActionListener {
 				;
 			else {
 				String read = reader.nextLine();
-				System.out.println(read.matches("OPEN"));
-				if (read.matches("OPEN")) {
+			//	System.out.println(read.matches("OPEN"));
+				if (!read.matches("CASH")) {
 					listModel.addElement(line);
 				}
 			}
 		}
+		if(reader != null)
 		reader.close();
 		inputStream.close();
 	}
@@ -111,9 +119,9 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		if (event.getActionCommand().equals("Delete") && receiptList.getSelectedIndex() > -1)
 			deleteReceipt();
 		if (event.getActionCommand().equals("Cash") && receiptList.getSelectedIndex() > -1)
-			closeReceipt();
+			closeReceipt("CASH");
 		if (event.getActionCommand().equals("Card") && receiptList.getSelectedIndex() > -1)
-			closeReceipt();
+			closeReceipt("CARD");
 		if (event.getActionCommand().equals("Back"))
 			SystemInit.setTransactionScreen();
 		
@@ -142,7 +150,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		listWriter.close();
 	}
 
-	private void closeReceipt() {
+	private void closeReceipt(String title) {
 		File file = new File(RECEIPT_PATH + "/"
 				+ receiptList.getSelectedValue());
 		Scanner reader = null;
@@ -151,7 +159,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		try {
 			reader = new Scanner(file);
 			reader.nextLine();
-			toPrint += "CLOSE";
+			toPrint += title;
 			while (reader.hasNextLine()) {
 				toPrint += "\n" + reader.nextLine();
 			}
@@ -169,7 +177,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 			System.out.println("Error printing");
 		}
 
-		SystemInit.setProcessScreen();
+		SystemInit.setProcessScreen(isAdmin);
 	}
 
 }
