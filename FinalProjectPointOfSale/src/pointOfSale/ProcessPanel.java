@@ -30,17 +30,17 @@ public class ProcessPanel extends JPanel implements ActionListener {
 
 	private JPanel upperPanel = new JPanel(new GridLayout(3, 1));
 	private JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
-	private DefaultListModel<String> listModel = new DefaultListModel<String>();
-	private JList<String> receiptList = new JList<String>(listModel);
+	private static DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private static JList<String> receiptList = new JList<String>(listModel);
 	private JLabel titleLabel = new JLabel("Process Receipt",
 			SwingConstants.CENTER);
 	private JLabel listLabel = new JLabel("Select Receipt from list below",
 			SwingConstants.LEFT);
 	
-	private boolean isAdmin;
+	private static boolean isAdmin;
 
-	public ProcessPanel(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public ProcessPanel(boolean isAdmin__) {
+		isAdmin = isAdmin__;
 		setLayout(new GridLayout(2, 1));
 		setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10,
 				DARK_CHAMPAGNE));
@@ -150,7 +150,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		listWriter.close();
 	}
 
-	private void closeReceipt(String title) {
+	public static void closeReceipt(String title) {
 		File file = new File(RECEIPT_PATH + "/"
 				+ receiptList.getSelectedValue());
 		Scanner reader = null;
@@ -158,7 +158,10 @@ public class ProcessPanel extends JPanel implements ActionListener {
 		String toPrint = "";
 		try {
 			reader = new Scanner(file);
-			reader.nextLine();
+			if(!title.equalsIgnoreCase("OPEN"))
+			{
+				reader.nextLine();
+			}
 			toPrint += title;
 			while (reader.hasNextLine()) {
 				toPrint += "\n" + reader.nextLine();
