@@ -36,13 +36,16 @@ public class CardPanel extends JPanel implements ActionListener {
 	private static String firstLine = "";
 	private static boolean isAdmin;
 	private static String swipe = "";
+	private static KeyBarsListener listen = null;
 	
 	public CardPanel(boolean isAdmin__)
 	{
 		isAdmin = isAdmin__;
 		tabPanel.removeAll();
 		display.removeAll();
-		display.addKeyListener(new KeyBarsListener());
+		display.removeKeyListener(listen);
+		listen = new KeyBarsListener();
+		display.addKeyListener(listen);
 		buttonPanel.removeAll();
 		bottomPanel.removeAll();
 		this.removeAll();
@@ -92,6 +95,7 @@ public class CardPanel extends JPanel implements ActionListener {
 		public void keyTyped(KeyEvent e) {
 			if(e.getKeyChar() == '\n') {
 				parseSwipe();
+				swipe = "";
 				if(firstLine.equalsIgnoreCase("OPEN"))
 				{
 					//get response
@@ -105,7 +109,7 @@ public class CardPanel extends JPanel implements ActionListener {
 						SystemInit.setTransactionScreen();
 					} else {
 						display.setText("Rejected");
-						tabStrings = new String[]{"","","",""};
+						tabStrings[2] = tabStrings[3] = "";
 						Tools.update(display);
 					}
 					return;
@@ -236,7 +240,7 @@ public class CardPanel extends JPanel implements ActionListener {
 							SystemInit.setTransactionScreen();
 						} else {
 							display.setText("Rejected");
-							tabStrings = new String[]{"","","",""};
+							tabStrings[2] = tabStrings[3] = "";
 							Tools.update(display);
 						}
 						return;
@@ -257,7 +261,7 @@ public class CardPanel extends JPanel implements ActionListener {
 						SystemInit.setTransactionScreen();
 					} else {
 						display.setText("Rejected");
-						tabStrings = new String[]{"","","",""};
+						tabStrings[2] = tabStrings[3] = "";
 						Tools.update(display);
 					}
 					return;
@@ -267,9 +271,15 @@ public class CardPanel extends JPanel implements ActionListener {
 			case 17: if(firstLine.equalsIgnoreCase("VOID")) {
 					Response response3 = new Response(3, num3());
 					saveTransaction(response3.getXML(), response3.getResponse(), 3);
-					ProcessPanel.closeReceipt("VOIDED");
-					tabStrings = new String[]{"","","",""};
-					SystemInit.setTransactionScreen();
+					if(response3.getResponse().contains("Approved")) {
+						ProcessPanel.closeReceipt("VOIDED");
+						tabStrings = new String[]{"","","",""};
+						SystemInit.setTransactionScreen();
+					} else {
+						display.setText("Unable to Void");
+						tabStrings[2] = tabStrings[3] = "";
+						Tools.update(display);
+					}
 				}
 			}
 		}
@@ -314,7 +324,7 @@ public class CardPanel extends JPanel implements ActionListener {
 				read = reader.nextLine();
 				if(read.contains("Tip"))
 				{
-					toPrint += "\n$" + tip + "\tTip";
+					toPrint += ("\n" + Tools.toMoney(tip) + manualTab(Tools.toMoney(tip)) + "Tip").replaceAll("\\.\\.", ".");
 				}
 				else
 				{
@@ -483,4 +493,11 @@ public class CardPanel extends JPanel implements ActionListener {
 		return toReturn;
 	}
 	
+	private static String manualTab(String entry)
+	{
+		String tab = "";
+		for(int count=0; count < 15 - entry.length(); count++)
+			tab += " ";
+		return tab;
+	}
 }

@@ -1,0 +1,20 @@
+<TStream>
+	<Transaction>
+		<MerchantID>395347306=TOKEN</MerchantID>
+		<TranType>Credit</TranType>
+		<TranCode>VoidSaleByRecordNo</TranCode>
+		<InvoiceNo>5</InvoiceNo>
+		<RefNo>5</RefNo>
+		<Memo>POS BRAVO v1.0</Memo>
+		<RecordNo>9YQ4ESHrm1Q9xlsRgub1wYvMYbr6pAAyIhESEAAjEAeEEA==</RecordNo>
+		<Frequency>OneTime</Frequency>
+		<Amount>
+			<Purchase>3.28</Purchase>
+		</Amount>
+		<TranInfo>
+			<AcqRefData>KaNcAV  d5e00</AcqRefData>
+			<ProcessData>|14|410100701000</ProcessData>
+			<AuthCode>000037</AuthCode>
+		</TranInfo>
+	</Transaction>
+</TStream>

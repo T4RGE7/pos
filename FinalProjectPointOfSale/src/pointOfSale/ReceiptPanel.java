@@ -35,6 +35,7 @@ public class ReceiptPanel extends JPanel
 	private static long totalAmount = 0;
 	private static String newReceipt = "";
 	private static double salesTax=0;
+	private static String transaction = "";
 	
 	/**
 	 * Constructs the ReceiptPanel.  Sets the initial conditions of the panel and the receiptList JList object.
@@ -53,7 +54,7 @@ public class ReceiptPanel extends JPanel
 		receiptList.setFont(new Font(Font.SERIF,Font.PLAIN,16));
 
 		add(new JScrollPane(receiptList, 
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS));
 	}
 	/**
 	 * Static method called by the ItemPanel class to add an item to the receiptList.
@@ -157,7 +158,12 @@ public class ReceiptPanel extends JPanel
 		}
 		catch(FileNotFoundException e)
 		{
+			try{
+				inputStream = new Scanner(new File(receiptFile));
+				transaction = receiptFile;
+			} catch (FileNotFoundException e1) {
 			JOptionPane.showMessageDialog(null,"File Not Found");
+			}
 		}
 		clearReceipt();
 		while(inputStream.hasNextLine())
@@ -214,5 +220,9 @@ public class ReceiptPanel extends JPanel
 		
 		salesTax = Double.parseDouble(inputStream.next());
 		inputStream.close();
+	}
+	
+	public static String getTransaction() {
+		return transaction;
 	}
 }

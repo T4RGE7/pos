@@ -1,0 +1,8 @@
+<?xml version="1.0"?><RStream>
+	<CmdResponse>
+		<ResponseOrigin>Server</ResponseOrigin>
+		<DSIXReturnCode>000100</DSIXReturnCode>
+		<CmdStatus>Error</CmdStatus>
+		<TextResponse>OTHER NOT ACCEPTED.</TextResponse>
+		<UserTraceData></UserTraceData>
+	</CmdResponse></RStream>

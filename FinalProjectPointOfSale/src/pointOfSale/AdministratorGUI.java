@@ -21,7 +21,7 @@ public class AdministratorGUI extends JPanel
 	private static final Color DARK_CHAMPAGNE = new Color(194, 178, 128);
 	
 	private JPanel quarterPanel1 = new JPanel(new GridLayout(2,1));
-	private JPanel quarterPanel2 = new JPanel(new GridLayout(2,1));
+	private JPanel quarterPanel2 = new JPanel(new GridLayout(3,1));
 	
 	/**
 	 * Constructs the layout and initial properties of the administrator screen.  Instantiates objects of
@@ -40,6 +40,7 @@ public class AdministratorGUI extends JPanel
 		
 		quarterPanel2.setBackground(DARK_CHAMPAGNE);
 		quarterPanel2.add(new TaxPanel());
+		quarterPanel2.add(new TransactionPanel());
 		quarterPanel2.add(new AdminButtonPanel());
 		
 		add(new ReceiptPanel());
