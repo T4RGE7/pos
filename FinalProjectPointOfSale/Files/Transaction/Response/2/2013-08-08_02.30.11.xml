@@ -1,0 +1,27 @@
+<?xml version="1.0"?><RStream>
+	<CmdResponse>
+		<ResponseOrigin>Processor</ResponseOrigin>
+		<DSIXReturnCode>000000</DSIXReturnCode>
+		<CmdStatus>Approved</CmdStatus>
+		<TextResponse>AP</TextResponse>
+		<UserTraceData></UserTraceData>
+	</CmdResponse>
+	<TranResponse>
+		<MerchantID>395347306</MerchantID>
+		<AcctNo>400300XXXXXX6781</AcctNo>
+		<ExpDate>XXXX</ExpDate>
+		<CardType>VISA</CardType>
+		<TranCode>PreAuthCapture</TranCode>
+		<AuthCode>000047</AuthCode>
+		<CaptureStatus>Captured</CaptureStatus>
+		<RefNo>0004</RefNo>
+		<InvoiceNo>13</InvoiceNo>
+		<Amount>
+			<Purchase>7.97</Purchase>
+			<Authorize>9.97</Authorize>
+			<Gratuity>2.00</Gratuity>
+		</Amount>
+		<AcqRefData>KaNcAV  d5e00</AcqRefData>
+		<RecordNo>g37o/T3/OmiRn1uYhKh4TKTtwdVOvE+YIhESEAAjEAeFbA==</RecordNo>
+		<ProcessData>|15|410100700000</ProcessData>
+	</TranResponse></RStream>

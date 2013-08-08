@@ -108,7 +108,12 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
-						display.setText("Rejected");
+//						Scanner regex = new Scanner(response1.getResponse().trim());
+//						String error = regex.findInLine("<TextResponse>No Live Cards on Test Merchant ID Allowed[\\.]</TextResponse>");
+//						System.out.println(response1.getResponse());
+//						System.out.println(error);
+						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+//						regex.close();
 						tabStrings[2] = tabStrings[3] = "";
 						Tools.update(display);
 					}
@@ -239,7 +244,10 @@ public class CardPanel extends JPanel implements ActionListener {
 							tabStrings = new String[]{"","","",""};
 							SystemInit.setTransactionScreen();
 						} else {
-							display.setText("Rejected");
+//							Scanner regex = new Scanner(response1.getResponse());
+//							String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
+							display.setText("Rejected: " /*+ error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+							//regex.close();
 							tabStrings[2] = tabStrings[3] = "";
 							Tools.update(display);
 						}
@@ -260,7 +268,10 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
-						display.setText("Rejected");
+//						Scanner regex = new Scanner(response2.getResponse());
+//						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
+						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+						//regex.close();
 						tabStrings[2] = tabStrings[3] = "";
 						Tools.update(display);
 					}
@@ -276,7 +287,10 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
-						display.setText("Unable to Void");
+						Scanner regex = new Scanner(response3.getResponse());
+						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
+						display.setText("Unable to void: " + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length()));
+						regex.close();
 						tabStrings[2] = tabStrings[3] = "";
 						Tools.update(display);
 					}
