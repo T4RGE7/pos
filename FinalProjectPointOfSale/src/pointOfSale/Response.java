@@ -7,7 +7,7 @@ public class Response {
 	private final String webURL = "https://w1.mercurydev.net/ws/ws.asmx";
 	private int type;
 	private String merchantID = "395347306=TOKEN", tranType = "Credit", tranCode, invoiceNo, refNo, memo, frequency = "OneTime", recordNo, partialAuth = "Allow", accountNum, expDate, purchase, authorize, gratuity, authCode, acqRefData, processData;
-	private String result = "";
+	private String result = "", response = "";
 	
 	public Response(int type__, String[] data)
 	{
@@ -26,14 +26,15 @@ public class Response {
 			gratuity = "0.0";
 			result = getResult1();
 			break;
-		case 2: tranCode = "PreAuthCaptureByRecordNumber";
+		case 2: tranCode = "PreAuthCaptureByRecordNo";
 			invoiceNo = data[0];
 			refNo = data[1];
-			purchase = data[2];
-			authorize = data[3];
-			gratuity = data[4];
-			authCode = data[5];
-			acqRefData = data[6];
+			recordNo = data[2];
+			purchase = data[3];
+			authorize = data[4];
+			gratuity = data[5];
+			authCode = data[6];
+			acqRefData = data[7];
 			result = getResult2();
 			break;
 		case 3: tranCode = "VoidSaleByRecordNo";
@@ -41,7 +42,7 @@ public class Response {
 			refNo = data[1];
 			memo = data[2];
 			recordNo = data[3];
-			frequency = data[4];
+			purchase = data[4];
 			acqRefData = data[5];
 			processData = data[6];
 			authCode = data[7];
@@ -131,7 +132,7 @@ public class Response {
 		temp += tranType;
 		temp += "</TranType>\n\t\t<TranCode>";
 		temp += tranCode;
-		temp += "</TranCode>\n\t\t</InvoiceNo>";
+		temp += "</TranCode>\n\t\t<InvoiceNo>";
 		temp += invoiceNo;
 		temp += "</InvoiceNo>\n\t\t<RefNo>";
 		temp += refNo;
@@ -163,12 +164,17 @@ public class Response {
 			test.setWebMethodName("CreditTransaction");
 			test.setTimeout(10);
 			String response = test.sendRequest();
-			System.out.println(response.replaceAll(">\t", ">\n\t"));
+			this.response = response.replaceAll(">\t", ">\n\t");
+			//System.out.println(response.replaceAll(">\t", ">\n\t"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public String getResponse() {
+		return this.response;
 	}
 	
 	public String getXML() {

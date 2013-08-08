@@ -1,0 +1,8 @@
+<?xml version="1.0"?><RStream>
+	<CmdResponse>
+		<ResponseOrigin>Server</ResponseOrigin>
+		<DSIXReturnCode>100211</DSIXReturnCode>
+		<CmdStatus>Error</CmdStatus>
+		<TextResponse>Invalid Field - Purchase Amount</TextResponse>
+		<UserTraceData></UserTraceData>
+	</CmdResponse></RStream>

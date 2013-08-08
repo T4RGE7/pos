@@ -114,7 +114,7 @@ public class ReceiptLoader extends JPanel implements ActionListener
 			{
 				throw new FileNotFoundException();
 			}
-			if(line.equalsIgnoreCase("PROGRESS"))
+			if(line.equalsIgnoreCase("PROGRESS") || line.equalsIgnoreCase("SWIPED"))
 			{
 				return true;
 			}
