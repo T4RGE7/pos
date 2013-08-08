@@ -31,10 +31,11 @@ public class CardPanel extends JPanel implements ActionListener {
 	private static int selection = 0;
 	private static File receiptSave = null;
 	private static String firstLine = "";
+	private static boolean isAdmin;
 	
-	
-	public CardPanel()
+	public CardPanel(boolean isAdmin__)
 	{
+		isAdmin = isAdmin__;
 		tabPanel.removeAll();
 		display.removeAll();
 		buttonPanel.removeAll();
@@ -67,7 +68,12 @@ public class CardPanel extends JPanel implements ActionListener {
 		buttonPanel.add(new MenuButton("0", "0", this));
 		buttonPanel.add(new MenuButton(".", "11", this));
 		
-		Tools.addBlankSpace(bottomPanel, 2);
+		if(isAdmin) {
+			bottomPanel.add(new MenuButton("VOID", "17", this));
+		} else {
+			Tools.addBlankSpace(bottomPanel, 1);
+		}
+		Tools.addBlankSpace(bottomPanel, 1);
 		bottomPanel.add(new MenuButton("Done", "16", this));
 		
 		add(tabPanel);
@@ -210,6 +216,13 @@ public class CardPanel extends JPanel implements ActionListener {
 				}
 				}
 			break;
+			case 17: if(firstLine.equalsIgnoreCase("VOID")) {
+					Response response3 = new Response(3, num3());
+					saveTransaction(response3.getXML(), response3.getResponse(), 3);
+					ProcessPanel.closeReceipt("VOIDED");
+					tabStrings = new String[]{"","","",""};
+					SystemInit.setTransactionScreen();
+				}
 			}
 		}
 		//for keyboard input you will have to parse the text in display when the tabs are changed
@@ -342,6 +355,8 @@ public class CardPanel extends JPanel implements ActionListener {
 			try {
 				reader = new Scanner(new File(file1 + "Sent/2" + file2));
 			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+				System.out.println("HERE2");
 				return null;
 			}
 		}
@@ -365,11 +380,11 @@ public class CardPanel extends JPanel implements ActionListener {
 				toReturn[3] = regex.findInLine("<RecordNo>.*</RecordNo>");
 				toReturn[3] = toReturn[3].substring("<RecordNo>".length(), toReturn[3].length() - "</RecordNo>".length());
 			} else if(read.contains("AuthCode")) {
-				toReturn[7] = regex.findInLine("<RecordNo>[\\da-zA-Z]</RecordNo>");
-				toReturn[7] = toReturn[7].substring("<RecordNo>".length(), toReturn[7].length() - "</RecordNo>".length());
+				toReturn[7] = regex.findInLine("<AuthCode>[\\da-zA-Z]</AuthCode>");
+				toReturn[7] = toReturn[7].substring("<AuthCode>".length(), toReturn[7].length() - "</AuthCode>".length());
 			} else if(read.contains("AcqRefData")) {
-				toReturn[5] = regex.findInLine("<RecordNo>[\\da-zA-Z ]*</RecordNo>");
-				toReturn[5] = toReturn[5].substring("<RecordNo>".length(), toReturn[5].length() - "</RecordNo>".length());
+				toReturn[5] = regex.findInLine("<AcqRefData>[\\da-zA-Z ]*</AcqRefData>");
+				toReturn[5] = toReturn[5].substring("<AcqRefData>".length(), toReturn[5].length() - "</AcqRefData>".length());
 			}
 		}
 		reader.close();
@@ -379,6 +394,7 @@ public class CardPanel extends JPanel implements ActionListener {
 			try {
 				reader = new Scanner(new File(file1 + "Response/2" + file2));
 			} catch (FileNotFoundException e1) {
+				System.out.println("HERE3");
 				return null;
 			}
 		}
@@ -405,11 +421,11 @@ public class CardPanel extends JPanel implements ActionListener {
 				toReturn[6] = regex.findInLine("<ProcessData>[\\d\\|]*</ProcessData>");
 				toReturn[6] = toReturn[6].substring("<ProcessData>".length(), toReturn[6].length() - "</ProcessData>".length());
 			} else if(read.contains("AuthCode")) {
-				toReturn[7] = regex.findInLine("<RecordNo>[\\da-zA-Z]*</RecordNo>");
-				toReturn[7] = toReturn[7].substring("<RecordNo>".length(), toReturn[7].length() - "</RecordNo>".length());
+				toReturn[7] = regex.findInLine("<AuthCode>[\\da-zA-Z]*</AuthCode>");
+				toReturn[7] = toReturn[7].substring("<AuthCode>".length(), toReturn[7].length() - "</AuthCode>".length());
 			} else if(read.contains("AcqRefData")) {
-				toReturn[5] = regex.findInLine("<RecordNo>[\\da-zA-Z ]*</RecordNo>");
-				toReturn[5] = toReturn[5].substring("<RecordNo>".length(), toReturn[5].length() - "</RecordNo>".length());
+				toReturn[5] = regex.findInLine("<AcqRefData>[\\da-zA-Z ]*</AcqRefData>");
+				toReturn[5] = toReturn[5].substring("<AcqRefData>".length(), toReturn[5].length() - "</AcqRefData>".length());
 			}
 			
 			

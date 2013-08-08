@@ -55,9 +55,9 @@ public class ProcessPanel extends JPanel implements ActionListener {
 
 		buttonPanel.setBackground(DARK_CHAMPAGNE);
 		buttonPanel.add(new MenuButton("Load", "Load", this));
-		if(isAdmin)
-			buttonPanel.add(new MenuButton("Void", "Void", this));
-		else
+//		if(isAdmin)
+//			buttonPanel.add(new MenuButton("Void", "Void", this));
+//		else
 			Tools.addBlankSpace(buttonPanel, 1);
 //		buttonPanel.add(new MenuButton("Delete", "Delete", this));
 	//	buttonPanel.add(new MenuButton("Card", "Card", this));
@@ -99,7 +99,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 			else {
 				String read = reader.nextLine();
 			//	System.out.println(read.matches("OPEN"));
-				if (!read.matches("CASH") && !read.matches("SWIPED")) {
+				if (!read.matches("CASH") && !read.matches("SWIPED") && !read.matches("VOIDED")) {
 					listModel.addElement(line);
 				}
 			}

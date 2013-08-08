@@ -12,14 +12,14 @@
 		<ExpDate>XXXX</ExpDate>
 		<CardType>VISA</CardType>
 		<TranCode>PreAuth</TranCode>
-		<AuthCode>000075</AuthCode>
-		<InvoiceNo>1</InvoiceNo>
+		<AuthCode>000057</AuthCode>
+		<InvoiceNo>2</InvoiceNo>
 		<Memo>POS BRAVO v1.0</Memo>
 		<Amount>
-			<Purchase>3.94</Purchase>
-			<Authorize>3.94</Authorize>
+			<Purchase>2.40</Purchase>
+			<Authorize>2.40</Authorize>
 		</Amount>
 		<AcqRefData>KaNcAV  d5e00</AcqRefData>
-		<RecordNo>f/HvCrwJHi9sQ9KZN2mqrSYy06E9k1q6IhESEAAjEAeDVA==</RecordNo>
+		<RecordNo>ioa/gfzkjTQoN16uWvlcAzSCJ57qygVMIhESEAAjEAeDdA==</RecordNo>
 		<ProcessData>|14|410100701000</ProcessData>
 	</TranResponse></RStream>

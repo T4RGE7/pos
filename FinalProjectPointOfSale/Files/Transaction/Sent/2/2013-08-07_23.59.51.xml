@@ -6,15 +6,15 @@
 		<PartialAuth>Allow</PartialAuth>
 		<InvoiceNo>1</InvoiceNo>
 		<RefNo>1</RefNo>
-		<RecordNo>f/HvCrwJHi9sQ9KZN2mqrSYy06E9k1q6IhESEAAjEAeDVA==</RecordNo>
+		<RecordNo>MeFWokEOdOg3FV1PJsC7S0J5bm8KGIM+IhESEAAjEAeDag==</RecordNo>
 		<Frequency>OneTime</Frequency>
 		<Amount>
-			<Purchase></Purchase>
-			<Authorize></Authorize>
-			<Gratuity>1.88</Gratuity>
+			<Purchase>3.28</Purchase>
+			<Authorize>3.28</Authorize>
+			<Gratuity>1.00</Gratuity>
 		</Amount>
 		<TranInfo>
-			<AuthCode>000075</AuthCode>
+			<AuthCode>000045</AuthCode>
 			<AcqRefData>KaNcAV  d5e00</AcqRefData>
 		</TranInfo>
 	</Transaction>

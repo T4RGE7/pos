@@ -1,0 +1,25 @@
+<?xml version="1.0"?><RStream>
+	<CmdResponse>
+		<ResponseOrigin>Processor</ResponseOrigin>
+		<DSIXReturnCode>000000</DSIXReturnCode>
+		<CmdStatus>Approved</CmdStatus>
+		<TextResponse>AP</TextResponse>
+		<UserTraceData></UserTraceData>
+	</CmdResponse>
+	<TranResponse>
+		<MerchantID>395347306</MerchantID>
+		<AcctNo>400300XXXXXX6781</AcctNo>
+		<ExpDate>XXXX</ExpDate>
+		<CardType>VISA</CardType>
+		<TranCode>PreAuth</TranCode>
+		<AuthCode>000077</AuthCode>
+		<InvoiceNo>3</InvoiceNo>
+		<Memo>POS BRAVO v1.0</Memo>
+		<Amount>
+			<Purchase>4.40</Purchase>
+			<Authorize>4.40</Authorize>
+		</Amount>
+		<AcqRefData>KaNcAV  d5e00</AcqRefData>
+		<RecordNo>kNqJVoXXTvOnT9Yx3SIIKWNnpUMnG70JIhESEAAjEAeDiA==</RecordNo>
+		<ProcessData>|14|410100701000</ProcessData>
+	</TranResponse></RStream>

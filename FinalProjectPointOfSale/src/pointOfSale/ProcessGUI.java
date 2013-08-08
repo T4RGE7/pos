@@ -27,7 +27,7 @@ public class ProcessGUI extends JPanel
 		
 		//quarterPanel2.add(new ReceiptPanel());
 		quarterPanel1.add(new ProcessPanel(isAdmin));
-		quarterPanel1.add(new CardPanel());
+		quarterPanel1.add(new CardPanel(isAdmin));
 		add(new ReceiptPanel());
 		add(quarterPanel1);
 		

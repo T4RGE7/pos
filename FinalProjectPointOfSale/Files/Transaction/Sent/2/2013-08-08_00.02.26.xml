@@ -1,0 +1,21 @@
+<TStream>
+	<Transaction>
+		<MerchantID>395347306=TOKEN</MerchantID>
+		<TranType>Credit</TranType>
+		<TranCode>PreAuthCaptureByRecordNo</TranCode>
+		<PartialAuth>Allow</PartialAuth>
+		<InvoiceNo>2</InvoiceNo>
+		<RefNo>2</RefNo>
+		<RecordNo>ioa/gfzkjTQoN16uWvlcAzSCJ57qygVMIhESEAAjEAeDdA==</RecordNo>
+		<Frequency>OneTime</Frequency>
+		<Amount>
+			<Purchase>2.40</Purchase>
+			<Authorize>2.40</Authorize>
+			<Gratuity>1.00</Gratuity>
+		</Amount>
+		<TranInfo>
+			<AuthCode>000057</AuthCode>
+			<AcqRefData>KaNcAV  d5e00</AcqRefData>
+		</TranInfo>
+	</Transaction>
+</TStream>

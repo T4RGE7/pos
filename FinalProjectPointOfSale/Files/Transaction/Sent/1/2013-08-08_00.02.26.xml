@@ -3,8 +3,8 @@
 		<MerchantID>395347306=TOKEN</MerchantID>
 		<TranType>Credit</TranType>
 		<TranCode>PreAuth</TranCode>
-		<InvoiceNo>1</InvoiceNo>
-		<RefNo>1</RefNo>
+		<InvoiceNo>2</InvoiceNo>
+		<RefNo>2</RefNo>
 		<Memo>POS BRAVO v1.0</Memo>
 		<Frequency>OneTime</Frequency>
 		<RecordNo>RecordNumberRequested</RecordNo>
@@ -14,8 +14,8 @@
 			<ExpDate>1215</ExpDate>
 		</Account>
 		<Amount>
-			<Purchase>3.94</Purchase>
-			<Authorize>3.94</Authorize>
+			<Purchase>2.40</Purchase>
+			<Authorize>2.40</Authorize>
 		</Amount>
 	</Transaction>
 </TStream>
