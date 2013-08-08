@@ -96,6 +96,7 @@ public class CardPanel extends JPanel implements ActionListener {
 	private class KeyBarsListener extends KeyAdapter {
 		public void keyTyped(KeyEvent e) {
 			if(e.getKeyChar() == '\n') {
+				//switch for generics or encrypted mag reader
 				parseSwipe();
 				swipe = "";
 				if(firstLine.equalsIgnoreCase("OPEN") && validate(tabStrings[2], tabStrings[3]))
@@ -110,11 +111,12 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
+						String response = getText(response1.getResponse());
 //						Scanner regex = new Scanner(response1.getResponse().trim());
 //						String error = regex.findInLine("<TextResponse>No Live Cards on Test Merchant ID Allowed[\\.]</TextResponse>");
 //						System.out.println(response1.getResponse());
 //						System.out.println(error);
-						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+						display.setText("Rejected: " + response/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 //						regex.close();
 						tabStrings[2] = ""; tabStrings[3] = "";
 						current = "";
@@ -247,9 +249,10 @@ public class CardPanel extends JPanel implements ActionListener {
 							tabStrings = new String[]{"","","",""};
 							SystemInit.setTransactionScreen();
 						} else {
+							String response = getText(response1.getResponse());
 //							Scanner regex = new Scanner(response1.getResponse());
 //							String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
-							display.setText("Rejected: " /*+ error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+							display.setText("Rejected: "  + response/*+ error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 							//regex.close();
 							tabStrings[2] = ""; tabStrings[3] = "";
 							current = "";
@@ -272,9 +275,10 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
+						String response = getText(response2.getResponse());
 //						Scanner regex = new Scanner(response2.getResponse());
 //						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
-						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+						display.setText("Rejected: " + response/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 						//regex.close();
 						tabStrings[2] = ""; tabStrings[3] = "";
 						current = "";
@@ -284,7 +288,7 @@ public class CardPanel extends JPanel implements ActionListener {
 				}
 				}
 			break;
-			case 17: if(firstLine.equalsIgnoreCase("VOID")) {
+			case 17: if(firstLine.equalsIgnoreCase("VOID") || firstLine.equalsIgnoreCase("PROGRESS")) {
 					Response response3 = new Response(3, num3());
 					saveTransaction(response3.getXML(), response3.getResponse(), 3);
 					if(response3.getResponse().contains("Approved")) {
@@ -292,10 +296,11 @@ public class CardPanel extends JPanel implements ActionListener {
 						tabStrings = new String[]{"","","",""};
 						SystemInit.setTransactionScreen();
 					} else {
-						Scanner regex = new Scanner(response3.getResponse());
-						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
-						display.setText("Unable to void: " + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length()));
-						regex.close();
+						String response = getText(response3.getResponse());
+//						Scanner regex = new Scanner(response3.getResponse());
+//						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
+						display.setText("Unable to void: " + response/*error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+						//regex.close();
 						tabStrings[2] = ""; tabStrings[3] = "";
 						current = "";
 						Tools.update(display);
@@ -310,8 +315,8 @@ public class CardPanel extends JPanel implements ActionListener {
 		
 	}
 	
-	private void saveTransaction(String sent, String response, int rev) {
-		PrintWriter printer = null;
+	protected static void saveTransaction(String sent, String response, int rev) {
+/*		PrintWriter printer = null;
 		
 		try {
 			printer = new PrintWriter("Files/Transaction/Sent/" + rev + "/" + receiptSave.getName() + ".xml");
@@ -319,6 +324,26 @@ public class CardPanel extends JPanel implements ActionListener {
 			printer.flush();
 			printer.close();
 			printer = new PrintWriter("Files/Transaction/Response/" + rev + "/" + receiptSave.getName() + ".xml");
+			printer.println(response);
+			printer.flush();
+			printer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		saveTransaction(sent, response, rev, receiptSave);
+	}
+	
+	protected static void saveTransaction(String sent, String response, int rev, File receipt) {
+		PrintWriter printer = null;
+		
+		try {
+			printer = new PrintWriter("Files/Transaction/Sent/" + rev + "/" + receipt.getName() + ".xml");
+			printer.println(sent);
+			printer.flush();
+			printer.close();
+			printer = new PrintWriter("Files/Transaction/Response/" + rev + "/" + receipt.getName() + ".xml");
 			printer.println(response);
 			printer.flush();
 			printer.close();
@@ -420,10 +445,15 @@ public class CardPanel extends JPanel implements ActionListener {
 		return toReturn;
 	}
 	
-	private String[] num3() {
+	private static String[] num3() {
+		return num3(receiptSave);
+	}
+	
+	//changed to Static
+	protected static String[] num3(File receiptSaveTemp) {
 		String toReturn[] = new String[8];
 		
-		String file1 = "Files/Transaction/", file2 = "/" + receiptSave.getName() + ".xml";
+		String file1 = "Files/Transaction/", file2 = "/" + receiptSaveTemp.getName() + ".xml";
 		Scanner reader = null;
 		Scanner regex = null;
 		
@@ -522,18 +552,20 @@ public class CardPanel extends JPanel implements ActionListener {
 		}
 		if(toReturn) {
 			int sum1 = 0;
-			for(int i = cardNum.length() - 1; i >= 0; i--) {
+			for(int i = cardNum.length() - 1; i >= 0; i-=2) {
 				sum1 += cardNum.charAt(i) - 48;
 			}
 			String sum2 = "";
-			for(int i = cardNum.length() - 2; i >= 0; i--) {
+			for(int i = cardNum.length() - 2; i >= 0; i-=2) {
 				sum2 += 2*(cardNum.charAt(i) - 48);
 			}
 			int sum3 = 0;
 			for(int i = 0; i < sum2.length(); i++) {
-				sum3 += cardNum.charAt(i) - 48;
+				sum3 += sum2.charAt(i) - 48;
 			}
+			System.out.println(sum1 + " + " + sum3);
 			if((sum3 + sum1)%10 == 0) {
+				System.out.println("validated");
 				return true;
 			}else {
 				return false;
@@ -548,5 +580,18 @@ public class CardPanel extends JPanel implements ActionListener {
 		for(int count=0; count < 15 - entry.length(); count++)
 			tab += " ";
 		return tab;
+	}
+	
+	protected static String getText(String in) {
+		String[] lines = in.split("\n");
+		for(int i = 0; i < lines.length; i++) {
+			System.out.println(lines[i]);
+			if(lines[i].contains("TextResponse")) {
+				String toReturn = new Scanner(lines[i]).findInLine("<TextResponse>[\\da-zA-Z\\s\\.]*</TextResponse>");
+				toReturn = toReturn.substring("<TextResponse>".length(), toReturn.length() - "</TextResponse>".length());
+				return toReturn;
+			}
+		}
+		return "Error";
 	}
 }

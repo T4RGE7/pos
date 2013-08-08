@@ -153,10 +153,16 @@ public class ProcessPanel extends JPanel implements ActionListener {
 			listWriter.println(listModel.getElementAt(count));
 		listWriter.close();
 	}
-
+	
 	public static void closeReceipt(String title) {
-		File file = new File(RECEIPT_PATH + "/"
-				+ receiptList.getSelectedValue());
+		closeReceipt(title, new File(RECEIPT_PATH + "/"
+				+ receiptList.getSelectedValue()));
+		SystemInit.setProcessScreen(isAdmin);
+	}
+
+	public static void closeReceipt(String title, File file) {
+//		File file = new File(RECEIPT_PATH + "/"
+//				+ receiptList.getSelectedValue());
 		Scanner reader = null;
 		PrintWriter printer = null;
 		String toPrint = "";
@@ -184,7 +190,7 @@ public class ProcessPanel extends JPanel implements ActionListener {
 			System.out.println("Error printing");
 		}
 
-		SystemInit.setProcessScreen(isAdmin);
+		
 	}
 
 }

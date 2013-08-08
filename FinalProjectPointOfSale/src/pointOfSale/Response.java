@@ -6,7 +6,8 @@ public class Response {
 
 	private final String webURL = "https://w1.mercurydev.net/ws/ws.asmx";
 	private int type;
-	private String merchantID = "395347306=TOKEN", tranType = "Credit", tranCode, invoiceNo, refNo, memo, frequency = "OneTime", recordNo, partialAuth = "Allow", accountNum, expDate, purchase, authorize, gratuity, authCode, acqRefData, processData;
+	private String merchantID = /*"023358150511666"*/"395347306=TOKEN", tranType = "Credit", tranCode, invoiceNo, refNo, memo, frequency = "OneTime", recordNo, partialAuth = "Allow", accountNum, expDate, purchase, authorize, gratuity, authCode, acqRefData, processData;
+	private String password = "123TOKEN";
 	private String result = "", response = "";
 	
 	public Response(int type__, String[] data)
@@ -48,6 +49,7 @@ public class Response {
 			authCode = data[7];
 			result = getResult3();
 			break;
+			//case for encrypted reader
 		}
 		
 		//System.out.println(result);
@@ -160,9 +162,9 @@ public class Response {
 		try {
 			MercuryWebRequest test = new MercuryWebRequest(webURL);
 			test.addParameter("tran", result);
-			test.addParameter("pw", "123TOKEN");
+			test.addParameter("pw", /*"123TOKEN""xyz" */password);
 			test.setWebMethodName("CreditTransaction");
-			test.setTimeout(10);
+			test.setTimeout(30);
 			String response = test.sendRequest();
 			this.response = response.replaceAll(">\t", ">\n\t");
 			//System.out.println(response.replaceAll(">\t", ">\n\t"));

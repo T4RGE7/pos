@@ -75,7 +75,26 @@ public class ReceiptLoader extends JPanel implements ActionListener
 		if(event.getActionCommand().equals("Delete All"))
 			deleteAll();
 		if(event.getActionCommand().equals("Void") && receiptList.getSelectedIndex() > -1 && checkValidState(receiptList.getSelectedValue()))
-			setToVoid(receiptList.getSelectedValue());
+		{
+			Response response3 = new Response(3, CardPanel.num3(new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue())));
+			CardPanel.saveTransaction(response3.getXML(), response3.getResponse(), 3, new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue()));
+			if(response3.getResponse().contains("Approved")) {
+				ProcessPanel.closeReceipt("VOIDED", new File(RECEIPT_PATH + "/" + receiptList.getSelectedValue()));
+				//tabStrings = new String[]{"","","",""};
+				//SystemInit.setTransactionScreen();
+				Tools.update(receiptList);
+			} else {
+				//String response = CardPanel.getText(response3.getResponse());
+//				Scanner regex = new Scanner(response3.getResponse());
+//				String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
+				//display.setText("Unable to void: " + response/*error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
+				//regex.close();
+				//tabStrings[2] = ""; tabStrings[3] = "";
+				//current = "";
+				Tools.update(receiptList);
+			}
+			//setToVoid(receiptList.getSelectedValue());
+		}
 	}
 	
 	private void setToVoid(String fileName)
