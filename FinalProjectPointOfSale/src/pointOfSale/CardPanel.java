@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -96,7 +98,7 @@ public class CardPanel extends JPanel implements ActionListener {
 			if(e.getKeyChar() == '\n') {
 				parseSwipe();
 				swipe = "";
-				if(firstLine.equalsIgnoreCase("OPEN"))
+				if(firstLine.equalsIgnoreCase("OPEN") && validate(tabStrings[2], tabStrings[3]))
 				{
 					//get response
 					String[] one = {getInvoiceNo() + "", getInvoiceNo() + "", "POS BRAVO v1.0", tabStrings[2], tabStrings[3], tabStrings[0], tabStrings[0]};
@@ -114,7 +116,8 @@ public class CardPanel extends JPanel implements ActionListener {
 //						System.out.println(error);
 						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 //						regex.close();
-						tabStrings[2] = tabStrings[3] = "";
+						tabStrings[2] = ""; tabStrings[3] = "";
+						current = "";
 						Tools.update(display);
 					}
 					return;
@@ -232,7 +235,7 @@ public class CardPanel extends JPanel implements ActionListener {
 				if(checkReady(tabStrings[2], tabStrings[3])) {
 					//
 					System.out.println(firstLine);
-					if(firstLine.equalsIgnoreCase("OPEN"))
+					if(firstLine.equalsIgnoreCase("OPEN") && validate(tabStrings[2], tabStrings[3]))
 					{
 						//get response
 						String[] one = {getInvoiceNo() + "", getInvoiceNo() + "", "POS BRAVO v1.0", tabStrings[2], tabStrings[3], tabStrings[0], tabStrings[0]};
@@ -248,7 +251,8 @@ public class CardPanel extends JPanel implements ActionListener {
 //							String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
 							display.setText("Rejected: " /*+ error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 							//regex.close();
-							tabStrings[2] = tabStrings[3] = "";
+							tabStrings[2] = ""; tabStrings[3] = "";
+							current = "";
 							Tools.update(display);
 						}
 						return;
@@ -272,7 +276,8 @@ public class CardPanel extends JPanel implements ActionListener {
 //						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
 						display.setText("Rejected: "/* + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length())*/);
 						//regex.close();
-						tabStrings[2] = tabStrings[3] = "";
+						tabStrings[2] = ""; tabStrings[3] = "";
+						current = "";
 						Tools.update(display);
 					}
 					return;
@@ -291,7 +296,8 @@ public class CardPanel extends JPanel implements ActionListener {
 						String error = regex.findInLine("<TextResponse>[\\.a-zA-Z \\d]*</TextResponse>");
 						display.setText("Unable to void: " + error.substring("<TextResponse>".length(), error.length() - "</TextResponse>".length()));
 						regex.close();
-						tabStrings[2] = tabStrings[3] = "";
+						tabStrings[2] = ""; tabStrings[3] = "";
+						current = "";
 						Tools.update(display);
 					}
 				}
@@ -504,6 +510,35 @@ public class CardPanel extends JPanel implements ActionListener {
 		}
 		reader.close();
 		
+		return toReturn;
+	}
+	
+	private static boolean validate(String cardNum, String expDate) {
+		boolean toReturn = false;
+		if(Calendar.YEAR%100 <= Integer.parseInt(expDate.substring(2))) {
+			if(Calendar.MONTH <= Integer.parseInt(expDate.substring(0, 2))) {
+				toReturn = true;
+			}
+		}
+		if(toReturn) {
+			int sum1 = 0;
+			for(int i = cardNum.length() - 1; i >= 0; i--) {
+				sum1 += cardNum.charAt(i) - 48;
+			}
+			String sum2 = "";
+			for(int i = cardNum.length() - 2; i >= 0; i--) {
+				sum2 += 2*(cardNum.charAt(i) - 48);
+			}
+			int sum3 = 0;
+			for(int i = 0; i < sum2.length(); i++) {
+				sum3 += cardNum.charAt(i) - 48;
+			}
+			if((sum3 + sum1)%10 == 0) {
+				return true;
+			}else {
+				return false;
+			}
+		}
 		return toReturn;
 	}
 	
