@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -32,12 +35,14 @@ public class CardPanel extends JPanel implements ActionListener {
 	private static File receiptSave = null;
 	private static String firstLine = "";
 	private static boolean isAdmin;
+	private static String swipe = "";
 	
 	public CardPanel(boolean isAdmin__)
 	{
 		isAdmin = isAdmin__;
 		tabPanel.removeAll();
 		display.removeAll();
+		display.addKeyListener(new KeyBarsListener());
 		buttonPanel.removeAll();
 		bottomPanel.removeAll();
 		this.removeAll();
@@ -81,6 +86,49 @@ public class CardPanel extends JPanel implements ActionListener {
 		add(buttonPanel);
 		add(bottomPanel);
 		
+	}
+	
+	private class KeyBarsListener extends KeyAdapter {
+		public void keyTyped(KeyEvent e) {
+			if(e.getKeyChar() == '\n') {
+				parseSwipe();
+				if(firstLine.equalsIgnoreCase("OPEN"))
+				{
+					//get response
+					String[] one = {getInvoiceNo() + "", getInvoiceNo() + "", "POS BRAVO v1.0", tabStrings[2], tabStrings[3], tabStrings[0], tabStrings[0]};
+					Response response1 = new Response(1, one);
+					saveTransaction(response1.getXML(), response1.getResponse(), 1);
+					if(response1.getResponse().contains("Approved")) {
+						ProcessPanel.closeReceipt("PROGRESS");
+						System.out.println("HERE");
+						tabStrings = new String[]{"","","",""};
+						SystemInit.setTransactionScreen();
+					} else {
+						display.setText("Rejected");
+						tabStrings = new String[]{"","","",""};
+						Tools.update(display);
+					}
+					return;
+				}
+				//System.out.println(tabStrings[2]);
+			} else {
+				swipe += e.getKeyChar();
+			}
+		}
+	}
+	
+	private void parseSwipe() {
+		Scanner regex = new Scanner(swipe);
+		System.out.println(swipe);
+		String temp = regex.findInLine(";\\d{10,20}=");
+		tabStrings[2] = temp.substring(1, temp.length() - 1);
+		regex.close();
+		regex = new Scanner(swipe);
+		temp = regex.findInLine("=\\d*");
+		temp = temp.substring(1, 5);
+		temp = temp.substring(2) + temp.subSequence(0, 2);
+		tabStrings[3] = temp;
+		regex.close();
 	}
 	
 	public static void loadReciept(File receipt)

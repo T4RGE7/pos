@@ -1,0 +1,8 @@
+<?xml version="1.0"?><RStream>
+	<CmdResponse>
+		<ResponseOrigin>Server</ResponseOrigin>
+		<DSIXReturnCode>004101</DSIXReturnCode>
+		<CmdStatus>Error</CmdStatus>
+		<TextResponse>No Live Cards on Test Merchant ID Allowed.</TextResponse>
+		<UserTraceData></UserTraceData>
+	</CmdResponse></RStream>
